@@ -30,7 +30,7 @@ public class FlightService {
         }
     }
 
-    public Flight getFlightByIndex(int index) {
+    public Flight selectFlight(int index) {
         if (index >= 0 && index < flightList.size()) {
             return flightList.get(index);
         } else {

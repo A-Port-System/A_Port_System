@@ -30,7 +30,7 @@ public class ReservationService {
         System.out.print("예약할 항공편 번호 입력 (1~" + flightService.getFlightCount() + "): ");
         int flightIndex = readIntInput() - 1;
 
-        Flight selectedFlight = flightService.getFlightByIndex(flightIndex);
+        Flight selectedFlight = flightService.selectFlight(flightIndex);
         if (selectedFlight != null) {
             Reservation reservation = new Reservation(user, selectedFlight);
             reservationList.add(reservation);
