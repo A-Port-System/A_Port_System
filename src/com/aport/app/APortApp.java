@@ -46,13 +46,13 @@ public class APortApp {
 
             	switch (choice) {
             	    case 1:
-            	        FlightService.getInstance().listFlights();
+            	        FlightService.getInstance().viewFlights();
             	        break;
             	    case 2:
             	        reservationService.createReservation(userService.getCurrentUser());
             	        break;
             	    case 3:
-            	        reservationService.viewMyReservations(userService.getCurrentUser());
+            	        reservationService.viewReservations(userService.getCurrentUser());
             	        break;
             	    case 4:
             	        userService.logout();

@@ -23,7 +23,7 @@ public class FlightService {
         flightList.add(new Flight("KE789", "Busan", "Los Angeles", "2025-06-03 15:00", "2025-06-03 23:00", 1500000));
     }
 
-    public void listFlights() {
+    public void viewFlights() {
         System.out.println("\n=== 항공편 목록 ===");
         for (int i = 0; i < flightList.size(); i++) {
             System.out.println((i + 1) + ". " + flightList.get(i).getFlightInfo());

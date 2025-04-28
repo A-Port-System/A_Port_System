@@ -26,7 +26,7 @@ public class ReservationService {
         }
 
         FlightService flightService = FlightService.getInstance();
-        flightService.listFlights();
+        flightService.viewFlights();
         System.out.print("예약할 항공편 번호 입력 (1~" + flightService.getFlightCount() + "): ");
         int flightIndex = readIntInput() - 1;
 
@@ -41,7 +41,7 @@ public class ReservationService {
         }
     }
     
-    public void viewMyReservations(User user) {
+    public void viewReservations(User user) {
         if (user == null) {
             System.out.println("로그인 후 이용 가능합니다.");
             return;
