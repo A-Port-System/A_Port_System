@@ -35,7 +35,7 @@ public class UserService {
         System.out.print("이름: ");
         String name = scanner.nextLine();
 
-        if (!validateUser(ID, null)) {
+        if (!authenticateUser(ID, null)) {
             User user = new User(ID, password, name);
             userMap.put(user.getID(), user);
             System.out.println("회원가입 완료!");
@@ -54,7 +54,7 @@ public class UserService {
         System.out.print("비밀번호: ");
         String password = scanner.nextLine();
 
-        if (validateUser(ID, password)) {
+        if (authenticateUser(ID, password)) {
             currentUser = userMap.get(ID);
             System.out.println(currentUser.getName() + "님 환영합니다!");
         } else {
@@ -71,7 +71,7 @@ public class UserService {
         return currentUser;
     }
 
-    private boolean validateUser(String ID, String password) {
+    private boolean authenticateUser(String ID, String password) {
         User user = userMap.get(ID);
         if (password == null) {
             return user != null;
