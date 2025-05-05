@@ -11,6 +11,7 @@ public class Reservation {
     private User user;
     private Flight flight;
     private LocalDateTime reservationDate;
+    private boolean isPaid = false;
 
     public Reservation(User user, Flight flight) {
         this.user = user;
@@ -55,4 +56,12 @@ public class Reservation {
     public void setReservationDate(LocalDateTime reservationDate) {
         this.reservationDate = reservationDate;
     }
+
+	public boolean isPaid() {
+		return isPaid;
+	}
+
+	public void setPaid(boolean isPaid) {
+		this.isPaid = isPaid;
+	}
 }
