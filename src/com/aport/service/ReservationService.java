@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ReservationService {
+public class ReservationService extends BaseService {
     private static ReservationService instance = new ReservationService();
     private List<Reservation> reservationList = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
@@ -20,10 +20,7 @@ public class ReservationService {
     }
 
     public void createReservation(User user) {
-        if (user == null) {
-            System.out.println("로그인 후 예약이 가능합니다.");
-            return;
-        }
+    	if (!validateLogin(user)) return;
 
         FlightService flightService = FlightService.getInstance();
         flightService.viewFlights();
@@ -42,10 +39,7 @@ public class ReservationService {
     }
     
     public void viewReservations(User user) {
-        if (user == null) {
-            System.out.println("로그인 후 이용 가능합니다.");
-            return;
-        }
+    	if (!validateLogin(user)) return;
 
         boolean hasReservation = false;
         for (Reservation reservation : reservationList) {
