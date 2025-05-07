@@ -665,7 +665,11 @@
                                                                             <source class="net.java.amateras.uml.usecasediagram.model.UsecaseActorModel" reference="../../.."/>
                                                                             <target class="net.java.amateras.uml.usecasediagram.model.UsecaseModel">
                                                                               <backgroundColor reference="../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                                                              <foregroundColor reference="../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../foregroundColor"/>
+                                                                              <foregroundColor>
+                                                                                <red>255</red>
+                                                                                <green>0</green>
+                                                                                <blue>0</blue>
+                                                                              </foregroundColor>
                                                                               <showIcon>true</showIcon>
                                                                               <parent class="net.java.amateras.uml.usecasediagram.model.SystemModel">
                                                                                 <backgroundColor reference="../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../backgroundColor"/>
@@ -855,11 +859,7 @@
                                                                                       <green>255</green>
                                                                                       <blue>206</blue>
                                                                                     </backgroundColor>
-                                                                                    <foregroundColor>
-                                                                                      <red>0</red>
-                                                                                      <green>0</green>
-                                                                                      <blue>0</blue>
-                                                                                    </foregroundColor>
+                                                                                    <foregroundColor reference="../../../../foregroundColor"/>
                                                                                     <showIcon>true</showIcon>
                                                                                     <parent class="net.java.amateras.uml.usecasediagram.model.SystemModel" reference="../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../.."/>
                                                                                     <listeners serialization="custom">
@@ -896,11 +896,7 @@
                                                                                             <green>255</green>
                                                                                             <blue>206</blue>
                                                                                           </backgroundColor>
-                                                                                          <foregroundColor>
-                                                                                            <red>0</red>
-                                                                                            <green>0</green>
-                                                                                            <blue>0</blue>
-                                                                                          </foregroundColor>
+                                                                                          <foregroundColor reference="../../../../../../../foregroundColor"/>
                                                                                           <showIcon>true</showIcon>
                                                                                           <parent class="net.java.amateras.uml.usecasediagram.model.SystemModel">
                                                                                             <backgroundColor reference="../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../backgroundColor"/>
@@ -931,11 +927,7 @@
                                                                                                   <green>255</green>
                                                                                                   <blue>206</blue>
                                                                                                 </backgroundColor>
-                                                                                                <foregroundColor>
-                                                                                                  <red>0</red>
-                                                                                                  <green>0</green>
-                                                                                                  <blue>0</blue>
-                                                                                                </foregroundColor>
+                                                                                                <foregroundColor reference="../../../../../../../../../../foregroundColor"/>
                                                                                                 <showIcon>true</showIcon>
                                                                                                 <parent class="net.java.amateras.uml.usecasediagram.model.SystemModel" reference="../../.."/>
                                                                                                 <listeners serialization="custom">
@@ -973,7 +965,7 @@
                                                                                                 <targetConnections/>
                                                                                                 <children/>
                                                                                                 <filterProperty/>
-                                                                                                <name>UseMileage</name>
+                                                                                                <name>ValidateUser</name>
                                                                                               </net.java.amateras.uml.usecasediagram.model.UsecaseModel>
                                                                                               <net.java.amateras.uml.usecasediagram.model.UsecaseModel>
                                                                                                 <backgroundColor>
@@ -981,11 +973,7 @@
                                                                                                   <green>255</green>
                                                                                                   <blue>206</blue>
                                                                                                 </backgroundColor>
-                                                                                                <foregroundColor>
-                                                                                                  <red>0</red>
-                                                                                                  <green>0</green>
-                                                                                                  <blue>0</blue>
-                                                                                                </foregroundColor>
+                                                                                                <foregroundColor reference="../../../../../../../../../../foregroundColor"/>
                                                                                                 <showIcon>true</showIcon>
                                                                                                 <parent class="net.java.amateras.uml.usecasediagram.model.SystemModel" reference="../../.."/>
                                                                                                 <listeners serialization="custom">
@@ -1023,12 +1011,12 @@
                                                                                                 <targetConnections/>
                                                                                                 <children/>
                                                                                                 <filterProperty/>
-                                                                                                <name>GetMileage</name>
+                                                                                                <name>ValidateUser</name>
                                                                                               </net.java.amateras.uml.usecasediagram.model.UsecaseModel>
                                                                                               <net.java.amateras.uml.usecasediagram.model.UsecaseModel reference="../../.."/>
                                                                                               <net.java.amateras.uml.usecasediagram.model.UsecaseModel>
                                                                                                 <backgroundColor reference="../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../backgroundColor"/>
-                                                                                                <foregroundColor reference="../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../foregroundColor"/>
+                                                                                                <foregroundColor reference="../../../../../../../../../../foregroundColor"/>
                                                                                                 <showIcon>true</showIcon>
                                                                                                 <parent class="net.java.amateras.uml.usecasediagram.model.SystemModel" reference="../../.."/>
                                                                                                 <listeners serialization="custom">
@@ -1066,7 +1054,7 @@
                                                                                                 <targetConnections/>
                                                                                                 <children/>
                                                                                                 <filterProperty/>
-                                                                                                <name>RegisterPayment</name>
+                                                                                                <name>ValidateUser</name>
                                                                                               </net.java.amateras.uml.usecasediagram.model.UsecaseModel>
                                                                                             </children>
                                                                                             <filterProperty/>
@@ -1138,7 +1126,7 @@
                                                                                           </targetConnections>
                                                                                           <children/>
                                                                                           <filterProperty/>
-                                                                                          <name>Pay</name>
+                                                                                          <name>ValidateUser</name>
                                                                                         </target>
                                                                                         <bendpoints/>
                                                                                       </net.java.amateras.uml.usecasediagram.model.UsecaseIncludeModel>
@@ -1161,11 +1149,7 @@
                                                                                             <green>255</green>
                                                                                             <blue>206</blue>
                                                                                           </backgroundColor>
-                                                                                          <foregroundColor>
-                                                                                            <red>0</red>
-                                                                                            <green>0</green>
-                                                                                            <blue>0</blue>
-                                                                                          </foregroundColor>
+                                                                                          <foregroundColor reference="../../../../../../../foregroundColor"/>
                                                                                           <showIcon>true</showIcon>
                                                                                           <parent class="net.java.amateras.uml.usecasediagram.model.SystemModel" reference="../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../../.."/>
                                                                                           <listeners serialization="custom">
@@ -1189,7 +1173,7 @@
                                                                                           </targetConnections>
                                                                                           <children/>
                                                                                           <filterProperty/>
-                                                                                          <name>SelectReservation</name>
+                                                                                          <name>ValidateUser</name>
                                                                                         </target>
                                                                                         <bendpoints/>
                                                                                       </net.java.amateras.uml.usecasediagram.model.UsecaseIncludeModel>
@@ -1324,7 +1308,7 @@
                                                                                     </targetConnections>
                                                                                     <children/>
                                                                                     <filterProperty/>
-                                                                                    <name>RecieveTicket</name>
+                                                                                    <name>ValidateUser</name>
                                                                                   </source>
                                                                                   <target class="net.java.amateras.uml.usecasediagram.model.UsecaseModel" reference="../../.."/>
                                                                                   <bendpoints/>
