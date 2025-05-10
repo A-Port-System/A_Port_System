@@ -1,67 +1,79 @@
 package com.aport.app;
 
-import com.aport.service.UserService;
+import com.aport.command.*;
+import com.aport.context.CommandContext;
+import com.aport.command.Invoker;
 import com.aport.service.FlightService;
 import com.aport.service.ReservationService;
+import com.aport.service.UserService;
 
 import java.util.Scanner;
 
 public class APortApp {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
+    private static UserService userService;
+    private static ReservationService reservationService;
+    private static FlightService flightService;
+    private static CommandContext context;
+    private static Invoker invoker;
 
     public static void run() {
-        UserService userService = UserService.getInstance();
-        ReservationService reservationService = ReservationService.getInstance();
+        setup();
 
         while (true) {
-            System.out.println("\n=== A Port 시스템 ===");
-            if (userService.getCurrentUser() == null) {
-                System.out.println("1. 회원가입");
-                System.out.println("2. 로그인");
-                System.out.println("0. 종료");
-                System.out.print("선택: ");
-                int choice = readIntInput();
+            printHeader();
 
-                switch (choice) {
-                    case 1:
-                        userService.signUp();
-                        break;
-                    case 2:
-                        userService.login();
-                        break;
-                    case 0:
-                        System.exit(0);
-                        break;
-                    default:
-                        System.out.println("잘못된 입력입니다.");
-                        break;
-                }
+            if (context.isGuest()) {
+                handleGuestMenu();
             } else {
-            	System.out.println("1. 항공편 검색/선택");
-            	System.out.println("2. 예약하기");
-            	System.out.println("3. 내 예약 조회"); // 추가
-            	System.out.println("4. 로그아웃");
-            	System.out.print("선택: ");
-            	int choice = readIntInput();
-
-            	switch (choice) {
-            	    case 1:
-            	        FlightService.getInstance().viewFlights();
-            	        break;
-            	    case 2:
-            	        reservationService.createReservation(userService.getCurrentUser());
-            	        break;
-            	    case 3:
-            	        reservationService.viewReservations(userService.getCurrentUser());
-            	        break;
-            	    case 4:
-            	        userService.logout();
-            	        break;
-            	    default:
-            	        System.out.println("잘못된 입력입니다.");
-            	        break;
-            	}
+                handleUserMenu();
             }
+        }
+    }
+
+    private static void setup() {
+        userService = UserService.getInstance();
+        reservationService = ReservationService.getInstance();
+        flightService = FlightService.getInstance();
+        context = new CommandContext(scanner, userService, reservationService, flightService);
+        invoker = new Invoker();
+    }
+
+    private static void printHeader() {
+        System.out.println("\n=== A Port 시스템 ===");
+    }
+
+    private static void handleGuestMenu() {
+        System.out.println("1. 회원가입");
+        System.out.println("2. 로그인");
+        System.out.println("0. 종료");
+        System.out.print("선택: ");
+
+        int choice = readIntInput();
+        if (choice == 0) System.exit(0);
+
+        Command command = context.getGuestCommand(choice);
+        runCommand(command);
+    }
+
+    private static void handleUserMenu() {
+        System.out.println("1. 항공편 검색/선택");
+        System.out.println("2. 예약하기");
+        System.out.println("3. 내 예약 조회");
+        System.out.println("4. 로그아웃");
+        System.out.print("선택: ");
+
+        int choice = readIntInput();
+        Command command = context.getUserCommand(choice);
+        runCommand(command);
+    }
+
+    private static void runCommand(Command command) {
+        if (command != null) {
+            invoker.setCommand(command);
+            invoker.run();
+        } else {
+            System.out.println("잘못된 입력입니다.");
         }
     }
 
