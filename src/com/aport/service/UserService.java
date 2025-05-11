@@ -2,6 +2,7 @@ package com.aport.service;
 
 import com.aport.user.*;
 import com.aport.strategy.signup.SignupStrategy;
+import com.aport.state.UserState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,7 @@ public class UserService extends BaseService {
     private final Map<String, User> userMap = new HashMap<>();
     private User currentUser = null;
     private SignupStrategy signupStrategy;
+    private UserState state;
 
     private UserService() {}
 
@@ -93,5 +95,13 @@ public class UserService extends BaseService {
         } else {
             System.out.println("Signup 전략이 설정되지 않았습니다.");
         }
+    }
+
+    public void setState(UserState state) {
+        this.state = state;
+    }
+
+    public UserState getState() {
+        return state;
     }
 }
