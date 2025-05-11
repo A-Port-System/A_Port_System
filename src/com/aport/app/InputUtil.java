@@ -10,26 +10,29 @@ public class InputUtil {
     }
 
     public static int readInt() {
-        try {
-            int num = scanner.nextInt();
-            scanner.nextLine(); // 개행 제거
-            return num;
-        } catch (Exception e) {
-            System.out.println("숫자를 입력해주세요.");
-            scanner.nextLine();
-            return -1;
+        while (true) {
+            try {
+                int num = scanner.nextInt();
+                scanner.nextLine(); // 개행 제거
+                return num;
+            } catch (Exception e) {
+                System.out.println("유효한 숫자를 입력해주세요.");
+                scanner.nextLine(); // 잘못된 입력 제거
+            }
         }
     }
     
     public static int readInt(String prompt) {
-        try {
-            int num = scanner.nextInt();
-            scanner.nextLine(); // 개행 제거
-            return num;
-        } catch (Exception e) {
-            System.out.println("숫자를 입력해주세요.");
-            scanner.nextLine();
-            return -1;
+        System.out.print(prompt);
+        while (true) {
+            try {
+                int num = scanner.nextInt();
+                scanner.nextLine(); // 개행 제거
+                return num;
+            } catch (Exception e) {
+                System.out.println("유효한 숫자를 입력해주세요.");
+                scanner.nextLine(); // 잘못된 입력 제거
+            }
         }
     }
     
