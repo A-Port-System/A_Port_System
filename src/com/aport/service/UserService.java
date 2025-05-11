@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class UserService {
+public class UserService extends BaseService {
     private static UserService instance = new UserService();
     private Map<String, User> userMap = new HashMap<>();
     private User currentUser = null;

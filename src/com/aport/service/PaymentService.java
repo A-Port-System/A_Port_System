@@ -7,154 +7,99 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PaymentService extends BaseService {
-    private static PaymentService instance = new PaymentService();
-    private Scanner scanner = new Scanner(System.in);
+    private static PaymentService instance;
+    private final Scanner scanner;
 
-    private PaymentService() {}
+    private PaymentService() {
+        this.scanner = new Scanner(System.in);
+    }
 
     public static PaymentService getInstance() {
+        if (instance == null) {
+            instance = new PaymentService();
+        }
         return instance;
     }
 
     public boolean processPayment(User user, Reservation reservation) {
-        if (!validateLogin(user)) return false;
+        List<String> cards = user.getRegisteredCards();
 
-        if (reservation.isPaid()) {
-            System.out.println("이미 결제된 예약입니다.");
-            return true;
+        // 1. 카드가 없으면 바로 등록
+        if (cards.isEmpty()) {
+            System.out.println("등록된 카드가 없습니다. 카드를 먼저 등록합니다.");
+            System.out.print("카드 번호 입력: ");
+            String cardNumber = scanner.nextLine();
+            user.addCard(cardNumber);
+            cards = user.getRegisteredCards(); // 갱신
         }
 
-        System.out.print("결제를 진행하시겠습니까? (Y/N): ");
-        String choice = scanner.nextLine().trim().toUpperCase();
-
-        if (!choice.equals("Y")) {
-            System.out.println("결제가 취소되었습니다. 티켓을 출력할 수 없습니다.");
-            return false;
-        }
-        
+        // 2. 카드 선택 또는 추가 등록
+        String selectedCard = null;
         while (true) {
-            System.out.println("\n=== 결제 옵션 ===");
-            System.out.println("1. 카드 등록");
-            System.out.println("2. 등록된 카드 보기");
-            System.out.println("3. 마일리지 확인");
-            System.out.println("4. 마일리지 사용");
-            System.out.println("5. 바로 결제하기");
-            System.out.println("0. 결제 취소");
-            System.out.print("선택: ");
-            int option = readIntInput();
-
-            switch (option) {
-                case 1:
-                	registerPayment(user);
-                    break;
-                case 2:
-                    viewRegisteredCards(user);
-                    break;
-                case 3:
-                    viewMileage(user);
-                    break;
-                case 4:
-                    if (useMileage(user, reservation)) {
-                        reservation.setPaid(true);
-                        return true;
-                    }
-                    break;
-                case 5:
-                    return directPayment(user, reservation);
-                case 0:
-                    System.out.println("결제가 취소되었습니다.");
-                    return false;
-                default:
-                    System.out.println("잘못된 선택입니다.");
-            }
-        }
-    }
-
-    private void registerPayment(User user) {
-        System.out.print("카드 번호를 입력하세요: ");
-        String cardNumber = scanner.nextLine().trim();
-        user.addCard(cardNumber);
-        System.out.println("카드가 성공적으로 등록되었습니다.");
-    }
-
-    private void viewRegisteredCards(User user) {
-        System.out.println("\n=== 등록된 카드 목록 ===");
-        List<String> cards = user.getRegisteredCards();
-        if (cards.isEmpty()) {
-            System.out.println("등록된 카드가 없습니다.");
-        } else {
+            System.out.println("등록된 카드 목록:");
             for (int i = 0; i < cards.size(); i++) {
-                System.out.println((i + 1) + ". " + cards.get(i));
+                System.out.printf("%d. %s\n", i + 1, cards.get(i));
+            }
+            System.out.printf("%d. 새 카드 등록\n", cards.size() + 1);
+            System.out.print("사용할 카드 번호 선택: ");
+            int selected = readIntInput();
+
+            if (selected >= 1 && selected <= cards.size()) {
+                selectedCard = cards.get(selected - 1);
+                break;
+            } else if (selected == cards.size() + 1) {
+                System.out.print("새 카드 번호 입력: ");
+                String newCard = scanner.nextLine();
+                user.addCard(newCard);
+                cards = user.getRegisteredCards(); // 갱신
+            } else {
+                System.out.println("잘못된 입력입니다. 다시 선택하세요.");
             }
         }
-    }
 
-    private void viewMileage(User user) {
-        System.out.println("현재 보유 마일리지: " + user.getMileage() + "점");
-    }
-
-    private boolean useMileage(User user, Reservation reservation) {
+        // 3. 마일리지 사용 여부
+        int total = reservation.getFlight().getPrice();
         int mileage = user.getMileage();
-        int price = reservation.getFlight().getPrice();
+        int usedMileage = 0;
+        int remaining = total;
 
-        System.out.println("현재 마일리지: " + mileage + " 포인트");
-        System.out.println("항공권 가격: " + price + "원");
-
-        if (mileage >= price) {
-            user.setMileage(mileage - price);
-            System.out.println("마일리지로 결제가 완료되었습니다!");
-            return true;
-        } else {
-            System.out.println("마일리지가 부족합니다.");
-            return false;
-        }
-    }
-    
-    private void getMileage(User user, int price) {
-        final double MILEAGE_RATE = 0.01;
-        int earnedMileage = (int) (price * MILEAGE_RATE);
-        int newMileage = user.getMileage() + earnedMileage;
-        user.setMileage(newMileage);
-        System.out.println("마일리지 " + earnedMileage + "점이 적립되었습니다. 현재 마일리지: " + newMileage + "점");
-    }
-
-
-    private boolean directPayment(User user, Reservation reservation) {
-        List<String> cards = user.getRegisteredCards();
-
-        if (cards.isEmpty()) {
-            System.out.println("등록된 카드가 없습니다. 먼저 카드를 등록하세요.");
-            return false;
+        boolean useMileage = false;
+        if (mileage > 0) {
+            System.out.print("마일리지를 사용하시겠습니까? (Y/N): ");
+            String answer = scanner.nextLine();
+            useMileage = answer.equalsIgnoreCase("Y");
         }
 
-        System.out.println("사용할 카드: " + cards.get(0)); // 가장 먼저 등록된 카드 사용
-        System.out.print("결제를 진행하시겠습니까? (Y/N): ");
-        String choice = scanner.nextLine().trim().toUpperCase();
-
-        if (choice.equals("Y")) {
-            System.out.println("결제를 진행 중입니다...");
-            reservation.setPaid(true);
-            System.out.println("결제가 완료되었습니다!");
-
-            // ⭐ 마일리지 적립
-            getMileage(user, reservation.getFlight().getPrice());
-
-            return true;
-        } else {
-            System.out.println("결제가 취소되었습니다.");
-            return false;
+        if (useMileage) {
+            if (mileage >= total) {
+                usedMileage = total;
+                remaining = 0;
+                user.setMileage(mileage - total);
+            } else {
+                usedMileage = mileage;
+                remaining = total - mileage;
+                user.setMileage(0);
+            }
         }
-    }
 
+        // 4. 결제 명세 출력
+        System.out.println("\n[결제 내역]");
+        System.out.printf("총 금액: %d원\n", total);
+        System.out.printf("사용한 마일리지: %d원\n", usedMileage);
+        System.out.printf("카드 결제 금액: %d원\n", remaining);
+        System.out.printf("사용한 카드: %s\n", selectedCard);
+
+        return true;
+    }
 
     private int readIntInput() {
         try {
             int num = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // 개행 제거
             return num;
         } catch (Exception e) {
-            System.out.println("숫자를 입력해주세요.");
-            scanner.nextLine();
+        	System.out.println("숫자를 입력해주세요.");
+            scanner.nextLine(); // 버퍼 비우기
             return -1;
         }
     }
