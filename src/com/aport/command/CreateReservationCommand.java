@@ -2,13 +2,15 @@ package com.aport.command;
 
 import com.aport.service.ReservationService;
 import com.aport.service.UserService;
-import com.aport.service.FlightService;
 import com.aport.flight.Flight;
-import com.aport.app.InputUtil;
+import com.aport.service.FlightService;
 import com.aport.reservation.Reservation;
+import com.aport.app.InputUtil;
 import java.util.List;
 
 public class CreateReservationCommand implements Command {
+
+    public CreateReservationCommand() { }
 
     @Override
     public void execute() {
