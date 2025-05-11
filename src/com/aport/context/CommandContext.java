@@ -5,7 +5,6 @@ import com.aport.service.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class CommandContext {
     private final UserService userService;
