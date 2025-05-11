@@ -21,23 +21,6 @@ public class UserService extends BaseService {
         return instance;
     }
 
-    public void setSignupStrategy(SignupStrategy signupStrategy) {
-        this.signupStrategy = signupStrategy;
-    }
-
-    public boolean login(User user) {
-        if (user != null) {
-            currentUser = user;
-            return true;
-        }
-        return false;
-    }
-
-    public void signUp() {
-        if (signupStrategy != null) signupStrategy.signUp();
-        else System.out.println("Signup 전략이 설정되지 않았습니다.");
-    }
-
     @Override
     public boolean validateLogin(User user) {
         return super.validateLogin(user);
@@ -77,6 +60,38 @@ public class UserService extends BaseService {
                 return user instanceof Agency ? user : null;
             default:
                 return null;
+        }
+    }
+
+    public boolean isLogined() {
+        return currentUser != null;
+    }
+
+    public boolean isUser(String id, String userType) {
+        User user = userMap.get(id);
+        if (user == null) return false;
+
+        switch (userType) {
+            case "customer":
+                return user instanceof Customer;
+            case "officer":
+                return user instanceof Officer;
+            case "agency":
+                return user instanceof Agency;
+            default:
+                return false;
+        }
+    }
+
+    public void setSignupStrategy(SignupStrategy signupStrategy) {
+        this.signupStrategy = signupStrategy;
+    }
+
+    public void createUser() {
+        if (signupStrategy != null) {
+            signupStrategy.signUp();
+        } else {
+            System.out.println("Signup 전략이 설정되지 않았습니다.");
         }
     }
 }

@@ -17,19 +17,19 @@ public class SignupCommand implements Command {
         int type = InputUtil.readInt();
         switch (type) {
             case 1:
-                UserService.getInstance().setSignupStrategy(new CustomerSignupStrategy(UserService.getInstance().getUserMap()));
+                UserService.getInstance().setSignupStrategy(new CustomerSignupStrategy());
                 break;
             case 2:
-                UserService.getInstance().setSignupStrategy(new OfficerSignupStrategy(UserService.getInstance().getUserMap()));
+                UserService.getInstance().setSignupStrategy(new OfficerSignupStrategy());
                 break;
             case 3:
-                UserService.getInstance().setSignupStrategy(new AgencySignupStrategy(UserService.getInstance().getUserMap()));
+                UserService.getInstance().setSignupStrategy(new AgencySignupStrategy());
                 break;
             default:
                 System.out.println("잘못된 입력입니다.");
                 return;
         }
 
-        UserService.getInstance().signUp();
+        UserService.getInstance().createUser();
     }
 }

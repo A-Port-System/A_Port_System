@@ -34,13 +34,16 @@ public class LoginCommand implements Command {
         String id = InputUtil.readLine("아이디(이메일): ");
         String password = InputUtil.readLine("비밀번호: ");
 
-        User user = UserService.getInstance().getUserByIdAndType(id, userType);
-        if (user != null && user.getPassword().equals(password)) {
-            if (UserService.getInstance().login(user)) {
+        if (UserService.getInstance().isUser(id, userType)) {
+            User user = UserService.getInstance().getUserMap().get(id);
+            if (user.getPassword().equals(password)) {
+                UserService.getInstance().setCurrentUser(user);
                 System.out.println(user.getName() + "님 환영합니다!");
+            } else {
+                System.out.println("로그인 실패: 비밀번호가 일치하지 않습니다.");
             }
         } else {
-            System.out.println("로그인 실패: 아이디나 비밀번호를 확인하세요.");
+            System.out.println("로그인 실패: 해당 유형의 사용자가 존재하지 않습니다.");
         }
     }
 }

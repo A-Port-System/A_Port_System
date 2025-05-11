@@ -1,19 +1,18 @@
 package com.aport.strategy.signup;
 
 import com.aport.app.InputUtil;
+import com.aport.service.UserService;
 import com.aport.user.Officer;
 import com.aport.user.User;
 import java.util.Map;
 
 public class OfficerSignupStrategy implements SignupStrategy {
-    private Map<String, User> userMap;
 
-    public OfficerSignupStrategy(Map<String, User> userMap) {
-        this.userMap = userMap;
-    }
-
+    @Override
     public void signUp() {
-    	String ID = InputUtil.readLine("아이디(이메일): ");
+        Map<String, User> userMap = UserService.getInstance().getUserMap();
+
+        String ID = InputUtil.readLine("아이디(이메일): ");
         if (userMap.containsKey(ID)) {
             System.out.println("이미 존재하는 아이디입니다.");
             return;
