@@ -26,4 +26,5 @@ public abstract class User {
     public void setRegisteredCards(List<String> registeredCards) { this.registeredCards = registeredCards; }
     public int getMileage() { return mileage; }
     public void setMileage(int mileage) { this.mileage = mileage; }
+    public void removeCard(String cardNumber) { registeredCards.remove(cardNumber);}
 }

@@ -70,4 +70,11 @@ public class Flight {
         this.price = price;
     }
 
+    public String getDestination() {
+        return arrival;
+    }
+
+    public void setDestination(String destination) {
+        this.arrival = destination;
+    }
 }

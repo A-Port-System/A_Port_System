@@ -36,4 +36,19 @@ public class FlightService {
     public int getFlightCount() {
         return flightList.size();
     }
+
+    public void addFlight(Flight flight) {
+        flightList.add(flight);
+    }
+
+    public boolean removeFlight(String flightNumber) {
+        return flightList.removeIf(flight -> flight.getFlightNumber().equals(flightNumber));
+    }
+
+    public Flight getFlight(String flightNumber) {
+        return flightList.stream()
+                .filter(flight -> flight.getFlightNumber().equals(flightNumber))
+                .findFirst()
+                .orElse(null);
+    }
 }
