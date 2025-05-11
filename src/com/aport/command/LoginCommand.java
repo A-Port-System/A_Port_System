@@ -2,15 +2,13 @@ package com.aport.command;
 
 import com.aport.service.UserService;
 
-import java.util.Scanner;
+import com.aport.app.InputUtil;
 
 public class LoginCommand implements Command {
     private final UserService userService;
-    private final Scanner scanner;
 
-    public LoginCommand(UserService userService, Scanner scanner) {
+    public LoginCommand(UserService userService) {
         this.userService = userService;
-        this.scanner = scanner;
     }
 
     @Override
@@ -21,7 +19,7 @@ public class LoginCommand implements Command {
         System.out.println("3. 대행사");
         System.out.print("선택: ");
 
-        int type = readIntInput();
+        int type = InputUtil.readInt();
         String userType = null;
         switch (type) {
             case 1:
@@ -42,15 +40,5 @@ public class LoginCommand implements Command {
         }
     }
 
-    private int readIntInput() {
-        try {
-            int num = scanner.nextInt();
-            scanner.nextLine();
-            return num;
-        } catch (Exception e) {
-            System.out.println("숫자를 입력해주세요.");
-            scanner.nextLine();
-            return -1;
-        }
-    }
+    
 }

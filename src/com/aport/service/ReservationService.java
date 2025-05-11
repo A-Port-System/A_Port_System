@@ -3,29 +3,30 @@ package com.aport.service;
 import com.aport.reservation.Reservation;
 import com.aport.user.User;
 import com.aport.flight.Flight;
+import com.aport.app.InputUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ReservationService extends BaseService {
-    private static ReservationService instance = new ReservationService();
-    private List<Reservation> reservationList = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
+    private static ReservationService instance;
+    private final List<Reservation> reservationList = new ArrayList<>();
 
     private ReservationService() {}
 
     public static ReservationService getInstance() {
+        if (instance == null) {
+            instance = new ReservationService();
+        }
         return instance;
     }
 
     public void createReservation(User user) {
-    	if (!validateLogin(user)) return;
+        if (!validateLogin(user)) return;
 
         FlightService flightService = FlightService.getInstance();
         flightService.viewFlights();
-        System.out.print("예약할 항공편 번호 입력 (1~" + flightService.getFlightCount() + "): ");
-        int flightIndex = readIntInput() - 1;
+        int flightIndex = InputUtil.readInt("예약할 항공편 번호 입력: ") - 1;
 
         Flight selectedFlight = flightService.selectFlight(flightIndex);
         if (selectedFlight != null) {
@@ -37,7 +38,7 @@ public class ReservationService extends BaseService {
             System.out.println("잘못된 선택입니다.");
         }
     }
-    
+
     public void viewReservations(User user) {
         if (!validateLogin(user)) return;
 
@@ -56,13 +57,9 @@ public class ReservationService extends BaseService {
             return;
         }
 
-        // 티켓 출력 여부 질문
-        System.out.print("\n티켓을 출력하시겠습니까? (Y/N): ");
-        String choice = scanner.nextLine().trim().toUpperCase();
-
+        String choice = InputUtil.readLine("\n티켓을 출력하시겠습니까? (Y/N): ").toUpperCase();
         if (choice.equals("Y")) {
-            System.out.print("출력할 예약번호를 입력하세요 (예: RSV1): ");
-            String reservationId = scanner.nextLine().trim();
+            String reservationId = InputUtil.readLine("출력할 예약번호를 입력하세요 (예: RSV1): ");
             selectReservation(user, reservationId);
         } else {
             System.out.println("티켓 출력이 취소되었습니다.");
@@ -73,7 +70,7 @@ public class ReservationService extends BaseService {
         for (Reservation reservation : reservationList) {
             if (reservation.getReservationId().equals(reservationId)
                     && reservation.getUser().getID().equals(user.getID())) {
-            	receiveTicket(user, reservation);
+                receiveTicket(user, reservation);
                 return;
             }
         }
@@ -83,13 +80,11 @@ public class ReservationService extends BaseService {
     private void receiveTicket(User user, Reservation reservation) {
         PaymentService paymentService = PaymentService.getInstance();
 
-        // 결제 여부 확인
         if (!reservation.isPaid()) {
             boolean paymentSuccess = paymentService.processPayment(user, reservation);
-            if (!paymentSuccess) return; // 결제 실패 시 종료
+            if (!paymentSuccess) return;
         }
 
-        // 결제 완료된 경우 티켓 출력
         System.out.println("\n===== [전자 항공권] =====");
         System.out.println("예약번호 : " + reservation.getReservationId());
         System.out.println("탑승자명 : " + reservation.getUser().getName());
@@ -100,17 +95,5 @@ public class ReservationService extends BaseService {
         System.out.println("도착시간 : " + reservation.getFlight().getArrivalTime());
         System.out.println("가격     : " + reservation.getFlight().getPrice() + "원");
         System.out.println("======================\n");
-    }
-
-    private int readIntInput() {
-        try {
-            int num = scanner.nextInt();
-            scanner.nextLine();
-            return num;
-        } catch (Exception e) {
-            System.out.println("숫자를 입력해주세요.");
-            scanner.nextLine();
-            return -1;
-        }
     }
 }

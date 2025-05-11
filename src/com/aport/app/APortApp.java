@@ -35,8 +35,10 @@ public class APortApp {
         userService = UserService.getInstance();
         reservationService = ReservationService.getInstance();
         flightService = FlightService.getInstance();
-        context = new CommandContext(scanner, userService, reservationService, flightService);
+        context = new CommandContext(userService, reservationService, flightService);
         invoker = new Invoker();
+        
+        InputUtil.setScanner(scanner);
     }
 
     private static void printHeader() {
@@ -49,7 +51,7 @@ public class APortApp {
         System.out.println("0. 종료");
         System.out.print("선택: ");
 
-        int choice = readIntInput();
+        int choice = InputUtil.readInt();
         if (choice == 0) System.exit(0);
 
         Command command = context.getGuestCommand(choice);
@@ -63,7 +65,7 @@ public class APortApp {
         System.out.println("4. 로그아웃");
         System.out.print("선택: ");
 
-        int choice = readIntInput();
+        int choice = InputUtil.readInt();
         Command command = context.getUserCommand(choice);
         runCommand(command);
     }
@@ -74,18 +76,6 @@ public class APortApp {
             invoker.run();
         } else {
             System.out.println("잘못된 입력입니다.");
-        }
-    }
-
-    private static int readIntInput() {
-        try {
-            int num = scanner.nextInt();
-            scanner.nextLine();
-            return num;
-        } catch (Exception e) {
-            System.out.println("숫자를 입력해주세요.");
-            scanner.nextLine();
-            return -1;
         }
     }
 }

@@ -1,19 +1,21 @@
 package com.aport.service;
 
 import com.aport.flight.Flight;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlightService {
-    private static FlightService instance = new FlightService();
-    private List<Flight> flightList = new ArrayList<>();
+    private static FlightService instance;
+    private final List<Flight> flightList = new ArrayList<>();
 
     private FlightService() {
         initializeFlights();
     }
 
     public static FlightService getInstance() {
+        if (instance == null) {
+            instance = new FlightService();
+        }
         return instance;
     }
 
@@ -31,11 +33,7 @@ public class FlightService {
     }
 
     public Flight selectFlight(int index) {
-        if (index >= 0 && index < flightList.size()) {
-            return flightList.get(index);
-        } else {
-            return null;
-        }
+        return (index >= 0 && index < flightList.size()) ? flightList.get(index) : null;
     }
 
     public int getFlightCount() {

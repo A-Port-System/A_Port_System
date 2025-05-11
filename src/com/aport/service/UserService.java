@@ -2,21 +2,23 @@ package com.aport.service;
 
 import com.aport.user.*;
 import com.aport.strategy.signup.SignupStrategy;
+import com.aport.app.InputUtil;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class UserService extends BaseService {
-    private static UserService instance = new UserService();
-    private Map<String, User> userMap = new HashMap<>();
+    private static UserService instance;
+    private final Map<String, User> userMap = new HashMap<>();
     private User currentUser = null;
-    private Scanner scanner = new Scanner(System.in);
-
     private SignupStrategy signupStrategy;
 
     private UserService() {}
 
     public static UserService getInstance() {
+        if (instance == null) {
+            instance = new UserService();
+        }
         return instance;
     }
 
@@ -25,10 +27,8 @@ public class UserService extends BaseService {
     }
 
     public void login(String userType) {
-        System.out.print("아이디(이메일): ");
-        String id = scanner.nextLine();
-        System.out.print("비밀번호: ");
-        String password = scanner.nextLine();
+        String id = InputUtil.readLine("아이디(이메일): ");
+        String password = InputUtil.readLine("비밀번호: ");
 
         User user = userMap.get(id);
         if (user != null && user.getPassword().equals(password) && matchUserType(userType, user)) {
@@ -42,11 +42,11 @@ public class UserService extends BaseService {
     private boolean matchUserType(String type, User user) {
         switch (type) {
             case "customer":
-                return user instanceof com.aport.user.Customer;
+                return user instanceof Customer;
             case "officer":
-                return user instanceof com.aport.user.Officer;
+                return user instanceof Officer;
             case "agency":
-                return user instanceof com.aport.user.Agency;
+                return user instanceof Agency;
             default:
                 return false;
         }
@@ -59,10 +59,6 @@ public class UserService extends BaseService {
 
     public Map<String, User> getUserMap() {
         return userMap;
-    }
-
-    public Scanner getScanner() {
-        return scanner;
     }
 
     public User getCurrentUser() {

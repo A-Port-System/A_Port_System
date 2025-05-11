@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class CommandContext {
-    private final Scanner scanner;
     private final UserService userService;
     private final ReservationService reservationService;
     private final FlightService flightService;
@@ -16,9 +15,8 @@ public class CommandContext {
     private final Map<Integer, Command> guestCommands = new HashMap<>();
     private final Map<Integer, Command> userCommands = new HashMap<>();
 
-    public CommandContext(Scanner scanner, UserService userService,
+    public CommandContext(UserService userService,
                           ReservationService reservationService, FlightService flightService) {
-        this.scanner = scanner;
         this.userService = userService;
         this.reservationService = reservationService;
         this.flightService = flightService;
@@ -28,8 +26,8 @@ public class CommandContext {
     }
 
     private void initializeGuestCommands() {
-        guestCommands.put(1, new SignupCommand(userService, scanner));
-        guestCommands.put(2, new LoginCommand(userService, scanner));
+        guestCommands.put(1, new SignupCommand(userService));
+        guestCommands.put(2, new LoginCommand(userService));
     }
 
     private void initializeUserCommands() {
