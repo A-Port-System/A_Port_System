@@ -3,17 +3,11 @@ package com.aport.app;
 import com.aport.command.*;
 import com.aport.context.CommandContext;
 import com.aport.command.Invoker;
-import com.aport.service.FlightService;
-import com.aport.service.ReservationService;
-import com.aport.service.UserService;
 
 import java.util.Scanner;
 
 public class APortApp {
     private static final Scanner scanner = new Scanner(System.in);
-    private static UserService userService;
-    private static ReservationService reservationService;
-    private static FlightService flightService;
     private static CommandContext context;
     private static Invoker invoker;
 
@@ -32,10 +26,7 @@ public class APortApp {
     }
 
     private static void setup() {
-        userService = UserService.getInstance();
-        reservationService = ReservationService.getInstance();
-        flightService = FlightService.getInstance();
-        context = new CommandContext(userService, reservationService, flightService);
+        context = new CommandContext(); // 수정된 부분
         invoker = new Invoker();
         
         InputUtil.setScanner(scanner);

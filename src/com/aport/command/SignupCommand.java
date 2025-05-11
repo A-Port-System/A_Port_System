@@ -5,11 +5,6 @@ import com.aport.strategy.signup.*;
 import com.aport.app.InputUtil;
 
 public class SignupCommand implements Command {
-    private final UserService userService;
-
-    public SignupCommand(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public void execute() {
@@ -22,19 +17,19 @@ public class SignupCommand implements Command {
         int type = InputUtil.readInt();
         switch (type) {
             case 1:
-                userService.setSignupStrategy(new CustomerSignupStrategy(userService.getUserMap()));
+                UserService.getInstance().setSignupStrategy(new CustomerSignupStrategy(UserService.getInstance().getUserMap()));
                 break;
             case 2:
-                userService.setSignupStrategy(new OfficerSignupStrategy(userService.getUserMap()));
+                UserService.getInstance().setSignupStrategy(new OfficerSignupStrategy(UserService.getInstance().getUserMap()));
                 break;
             case 3:
-                userService.setSignupStrategy(new AgencySignupStrategy(userService.getUserMap()));
+                UserService.getInstance().setSignupStrategy(new AgencySignupStrategy(UserService.getInstance().getUserMap()));
                 break;
             default:
                 System.out.println("잘못된 입력입니다.");
                 return;
         }
 
-        userService.signUp();
+        UserService.getInstance().signUp();
     }
 }

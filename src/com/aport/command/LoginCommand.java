@@ -1,15 +1,10 @@
 package com.aport.command;
 
 import com.aport.service.UserService;
-
 import com.aport.app.InputUtil;
+import com.aport.user.User;
 
 public class LoginCommand implements Command {
-    private final UserService userService;
-
-    public LoginCommand(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public void execute() {
@@ -33,12 +28,19 @@ public class LoginCommand implements Command {
                 break;
             default:
                 System.out.println("잘못된 입력입니다.");
+                return;
         }
 
-        if (userType != null) {
-            userService.login(userType);
+        String id = InputUtil.readLine("아이디(이메일): ");
+        String password = InputUtil.readLine("비밀번호: ");
+
+        User user = UserService.getInstance().getUserByIdAndType(id, userType);
+        if (user != null && user.getPassword().equals(password)) {
+            if (UserService.getInstance().login(user)) {
+                System.out.println(user.getName() + "님 환영합니다!");
+            }
+        } else {
+            System.out.println("로그인 실패: 아이디나 비밀번호를 확인하세요.");
         }
     }
-
-    
 }

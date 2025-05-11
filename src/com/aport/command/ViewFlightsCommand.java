@@ -1,16 +1,17 @@
 package com.aport.command;
 
 import com.aport.service.FlightService;
+import com.aport.flight.Flight;
+import java.util.List;
 
 public class ViewFlightsCommand implements Command {
-    private final FlightService flightService;
-
-    public ViewFlightsCommand(FlightService flightService) {
-        this.flightService = flightService;
-    }
 
     @Override
     public void execute() {
-        flightService.viewFlights();
+        List<Flight> flights = FlightService.getInstance().getFlights();
+        System.out.println("\n=== 항공편 목록 ===");
+        for (int i = 0; i < flights.size(); i++) {
+            System.out.println((i + 1) + ". " + flights.get(i).getFlightInfo());
+        }
     }
 }

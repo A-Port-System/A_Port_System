@@ -3,14 +3,13 @@ package com.aport.command;
 import com.aport.service.UserService;
 
 public class LogoutCommand implements Command {
-    private final UserService userService;
-
-    public LogoutCommand(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public void execute() {
-        userService.logout();
+        if (UserService.getInstance().logout()) {
+            System.out.println("로그아웃 되었습니다.");
+        } else {
+            System.out.println("현재 로그인 상태가 아닙니다.");
+        }
     }
 }
