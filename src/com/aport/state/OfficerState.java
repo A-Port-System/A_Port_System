@@ -1,12 +1,8 @@
 package com.aport.state;
 
 import com.aport.app.InputUtil;
-import com.aport.command.Command;
-import com.aport.command.CreateFlightCommand;
-import com.aport.command.ViewFlightCommand;
-import com.aport.command.CancelFlightCommand;
-import com.aport.command.ModifyFlightCommand;
-import com.aport.command.LogoutCommand;
+import com.aport.command.*;
+import com.aport.user.*;
 import com.aport.service.UserService;
 
 import java.util.HashMap;
@@ -54,6 +50,17 @@ public class OfficerState implements UserState {
             command.execute();
         } else {
             System.out.println("잘못된 입력입니다.");
+        }
+    }
+
+    @Override
+    public void changeState(User user) {
+        if (user instanceof Officer) {
+            UserService.getInstance().setState(new OfficerState());
+        } else if (user instanceof Customer) {
+            UserService.getInstance().setState(new CustomerState());
+        } else {
+            UserService.getInstance().setState(new GuestState());
         }
     }
 }

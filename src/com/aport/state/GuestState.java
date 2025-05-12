@@ -3,6 +3,10 @@ package com.aport.state;
 import com.aport.app.InputUtil;
 import com.aport.command.Command;
 import com.aport.command.SignupCommand;
+import com.aport.service.UserService;
+import com.aport.user.Customer;
+import com.aport.user.Officer;
+import com.aport.user.User;
 import com.aport.command.LoginCommand;
 
 import java.util.HashMap;
@@ -43,6 +47,17 @@ public class GuestState implements UserState {
             command.execute();
         } else {
             System.out.println("잘못된 입력입니다.");
+        }
+    }
+
+    @Override
+    public void changeState(User user) {
+        if (user instanceof Officer) {
+            UserService.getInstance().setState(new OfficerState());
+        } else if (user instanceof Customer) {
+            UserService.getInstance().setState(new CustomerState());
+        } else {
+            UserService.getInstance().setState(new GuestState());
         }
     }
 }

@@ -5,6 +5,10 @@ import com.aport.command.Command;
 import com.aport.command.ViewFlightsCommand;
 import com.aport.command.CreateReservationCommand;
 import com.aport.command.ViewReservationsCommand;
+import com.aport.service.UserService;
+import com.aport.user.Customer;
+import com.aport.user.Officer;
+import com.aport.user.User;
 import com.aport.command.LogoutCommand;
 import com.aport.command.PaymentCommand;
 
@@ -48,6 +52,17 @@ public class CustomerState implements UserState {
             command.execute();
         } else {
             System.out.println("잘못된 입력입니다.");
+        }
+    }
+
+    @Override
+    public void changeState(User user) {
+        if (user instanceof Officer) {
+            UserService.getInstance().setState(new OfficerState());
+        } else if (user instanceof Customer) {
+            UserService.getInstance().setState(new CustomerState());
+        } else {
+            UserService.getInstance().setState(new GuestState());
         }
     }
 }

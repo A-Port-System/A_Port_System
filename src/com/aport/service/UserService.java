@@ -39,39 +39,20 @@ public class UserService extends BaseService {
     }
 
     public void setCurrentUser(User user) {
+        state.changeState(user);
         this.currentUser = user;
     }
 
-    public User getUserByIdAndType(String id, String userType) {
+    public boolean isUser(String id, String password) {
         User user = userMap.get(id);
-        if (user == null) return null;
-
-        switch (userType) {
-            case "customer":
-                return user instanceof Customer ? user : null;
-            case "officer":
-                return user instanceof Officer ? user : null;
-            case "agency":
-                return user instanceof Agency ? user : null;
-            default:
-                return null;
+        if (user != null && user.getPassword().equals(password)) {
+            return true;
         }
+        return false;
     }
-
-    public boolean isUser(String id, String userType) {
-        User user = userMap.get(id);
-        if (user == null) return false;
-
-        switch (userType) {
-            case "customer":
-                return user instanceof Customer;
-            case "officer":
-                return user instanceof Officer;
-            case "agency":
-                return user instanceof Agency;
-            default:
-                return false;
-        }
+    
+    public User getUser(String id) {
+        return userMap.get(id);
     }
 
     public void setSignupStrategy(SignupStrategy signupStrategy) {
