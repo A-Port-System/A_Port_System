@@ -1,22 +1,34 @@
 package com.aport.command;
 
 import com.aport.reservation.Reservation;
-import com.aport.service.PaymentService;
+import com.aport.service.*;
 import com.aport.user.User;
 import com.aport.app.InputUtil;
 import java.util.List;
 
 public class PaymentCommand implements Command {
-    private User user;
-    private Reservation reservation;
-
-    public PaymentCommand(User user, Reservation reservation) {
-        this.user = user;
-        this.reservation = reservation;
-    }
 
     @Override
     public void execute() {
+        User user = UserService.getInstance().getCurrentUser();
+
+        Reservation reservation = null;
+        System.out.println("결제할 예약을 선택하세요.");
+        List<Reservation> reservations = ReservationService.getInstance().getReservationsForUser(user);
+        for (int i = 0; i < reservations.size(); i++) {
+            System.out.printf("%d. %s\n", i + 1, reservations.get(i).getReservationInfo());
+        }
+
+        int selected = InputUtil.readInt("예약 번호 선택: ");
+        if (selected < 1 || selected > reservations.size()) {
+            System.out.println("잘못된 입력입니다.");
+            return;
+        }
+
+        reservation = reservations.get(selected - 1);
+        System.out.println("결제할 예약: " + reservation.getReservationInfo());
+        System.out.println("결제 수단을 선택하세요.");
+
         PaymentService paymentService = PaymentService.getInstance();
         List<String> cards = user.getRegisteredCards();
 
@@ -34,9 +46,13 @@ public class PaymentCommand implements Command {
                 System.out.printf("%d. %s\n", i + 1, cards.get(i));
             }
             System.out.printf("%d. 새 카드 등록\n", cards.size() + 1);
-            int selected = InputUtil.readInt("사용할 카드 번호 선택: ");
+            System.out.println("0. 취소");
+            selected = InputUtil.readInt("사용할 카드 번호 선택: ");
 
-            if (selected >= 1 && selected <= cards.size()) {
+            if (selected == 0) {
+                System.out.println("결제를 취소합니다.");
+                return;
+            } else if (selected >= 1 && selected <= cards.size()) {
                 selectedCard = cards.get(selected - 1);
                 break;
             } else if (selected == cards.size() + 1) {
@@ -76,5 +92,18 @@ public class PaymentCommand implements Command {
         System.out.printf("사용한 마일리지: %d원\n", usedMileage);
         System.out.printf("카드 결제 금액: %d원\n", remaining);
         System.out.printf("사용한 카드: %s\n", selectedCard);
+
+        //티켓 정보
+        System.out.println("\n=== [티켓 내용] - " + reservation.getReservationId()+ " ===");
+        System.out.printf("항공편: %s\n", reservation.getFlight().getFlightNumber());
+        System.out.printf("탑승자: %s\n", reservation.getUser().getName());
+        //탑승지 정보 헤더
+        System.out.println("\n[탑승지 정보]");
+        System.out.printf("탑승지: %s\n", reservation.getFlight().getDeparture());
+        System.out.printf("탑승일: %s\n", reservation.getFlight().getDepartureTime());
+        //도착지 정보 헤더
+        System.out.println("\n[도착지 정보]");
+        System.out.printf("도착지: %s\n", reservation.getFlight().getArrival());
+        System.out.printf("도착일: %s\n", reservation.getFlight().getArrivalTime());
     }
 }

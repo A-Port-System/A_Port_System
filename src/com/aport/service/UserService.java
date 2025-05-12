@@ -2,7 +2,7 @@ package com.aport.service;
 
 import com.aport.user.*;
 import com.aport.strategy.signup.SignupStrategy;
-import com.aport.state.UserState;
+import com.aport.state.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,9 @@ public class UserService extends BaseService {
     private SignupStrategy signupStrategy;
     private UserState state;
 
-    private UserService() {}
+    private UserService() {
+        state = new GuestState();
+    }
 
     public static UserService getInstance() {
         if (instance == null) {
@@ -40,15 +42,6 @@ public class UserService extends BaseService {
         this.currentUser = user;
     }
 
-    public boolean logout() {
-        if (currentUser != null) {
-            currentUser = null;
-            System.out.println("로그아웃 완료.");
-            return true;
-        }
-        return false;
-    }
-
     public User getUserByIdAndType(String id, String userType) {
         User user = userMap.get(id);
         if (user == null) return null;
@@ -63,10 +56,6 @@ public class UserService extends BaseService {
             default:
                 return null;
         }
-    }
-
-    public boolean isLogined() {
-        return currentUser != null;
     }
 
     public boolean isUser(String id, String userType) {
