@@ -1,9 +1,8 @@
 package com.aport.user;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public abstract class User {
     private String ID;
     private String password;
     private String name;
@@ -16,48 +15,16 @@ public class User {
         this.name = name;
     }
 
-    public String getID() {
-        return ID;
-    }
-
-    public void setUID(String ID) {
-        this.ID = ID;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-	public List<String> getRegisteredCards() {
-		return registeredCards;
-	}
-
-	public void addCard(String cardNumber) {
-	    registeredCards.add(cardNumber);
-	}
-
-	
-	public void setRegisteredCards(List<String> registeredCards) {
-		this.registeredCards = registeredCards;
-	}
-
-	public int getMileage() {
-		return mileage;
-	}
-
-	public void setMileage(int mileage) {
-		this.mileage = mileage;
-	}
+    public String getID() { return ID; }
+    public void setUID(String ID) { this.ID = ID; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public List<String> getRegisteredCards() { return registeredCards; }
+    public void addCard(String cardNumber) { registeredCards.add(cardNumber); }
+    public void setRegisteredCards(List<String> registeredCards) { this.registeredCards = registeredCards; }
+    public int getMileage() { return mileage; }
+    public void setMileage(int mileage) { this.mileage = mileage; }
+    public void removeCard(String cardNumber) { registeredCards.remove(cardNumber);}
 }
