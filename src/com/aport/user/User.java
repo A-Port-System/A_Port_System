@@ -3,20 +3,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class User {
-    private String ID;
+    private String id;
     private String password;
     private String name;
     private List<String> registeredCards = new ArrayList<>();
     private int mileage = 0;
 
     public User(String username, String password, String name) {
-        this.ID = username;
+        this.id = username;
         this.password = password;
         this.name = name;
     }
 
-    public String getID() { return ID; }
-    public void setUID(String ID) { this.ID = ID; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
     public String getName() { return name; }

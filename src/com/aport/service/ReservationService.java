@@ -30,7 +30,7 @@ public class ReservationService extends BaseService {
 
         List<Reservation> userReservations = new ArrayList<>();
         for (Reservation reservation : reservationList) {
-            if (reservation.getUser().getID().equals(user.getID())) {
+            if (reservation.getUser().getId().equals(user.getId())) {
                 userReservations.add(reservation);
             }
         }
@@ -40,7 +40,7 @@ public class ReservationService extends BaseService {
     public List<Reservation> getReservations(User user) {
         List<Reservation> userReservations = new ArrayList<>();
         for (Reservation reservation : reservationList) {
-            if (reservation.getUser().getID().equals(user.getID())) {
+            if (reservation.getUser().getId().equals(user.getId())) {
                 userReservations.add(reservation);
             }
         }
