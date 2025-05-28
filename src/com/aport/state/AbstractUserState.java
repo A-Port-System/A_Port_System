@@ -1,6 +1,7 @@
 package com.aport.state;
 
 import com.aport.app.InputUtil;
+import com.aport.command.Invoker;
 import com.aport.command.Command;
 import com.aport.service.UserService;
 import com.aport.user.Customer;
@@ -28,12 +29,15 @@ public abstract class AbstractUserState implements UserState {
 			return;
 		}
 		
-		Command command = getCommand(choice);
-		if (command != null) {
-			command.execute();
-		} else {
-			System.out.println("잘못된 입력입니다.");
+		if (!commands.containsKey(choice)) {
+			System.out.println("잘못된 선택입니다. 다시 시도하세요.");
+			handleMenu();
+			return;
 		}
+
+		Invoker invoker = new Invoker();
+		invoker.setCommand(commands.get(choice));
+		invoker.run();
 	}
 	
 	@Override
