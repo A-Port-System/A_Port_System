@@ -7,7 +7,7 @@ public class OfficerState extends AbstractUserState {
     @Override
     public void initializeCommands() {
         commands.put(1, new CreateFlightCommand());
-        commands.put(2, new ViewFlightCommand());
+        commands.put(2, new ViewFlightsCommand());
         commands.put(3, new CancelFlightCommand());
         commands.put(4, new ModifyFlightCommand());
         commands.put(5, new LogoutCommand());
