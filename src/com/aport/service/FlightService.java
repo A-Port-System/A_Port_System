@@ -25,7 +25,7 @@ public class FlightService {
         flightList.add(new Flight("KE789", "Busan", "Los Angeles", "2025-06-03 15:00", "2025-06-03 23:00", 1500000));
     }
 
-    public List<Flight> getFlights() {
+    public List<Flight> getAllFlights() {
         return new ArrayList<>(flightList);
     }
 
@@ -37,12 +37,18 @@ public class FlightService {
         return flightList.size();
     }
 
-    public void addFlight(Flight flight) {
+    public void createFlight(Flight flight) {
         flightList.add(flight);
     }
 
-    public boolean removeFlight(String flightNumber) {
+    public boolean cancelFlight(String flightNumber) {
         return flightList.removeIf(flight -> flight.getFlightNumber().equals(flightNumber));
+    }
+    
+    public void modifyFlight(Flight flight, String newDeparture, String newDestination, int newPrice) {
+    	 flight.setDeparture(newDeparture);
+         flight.setDestination(newDestination);
+         flight.setPrice(newPrice);
     }
 
     public Flight getFlight(String flightNumber) {
