@@ -1,12 +1,7 @@
 package com.aport.state;
 
-
-import com.aport.command.ViewFlightsCommand;
-import com.aport.command.CreateReservationCommand;
-import com.aport.command.ViewReservationsCommand;
+import com.aport.command.*;
 import com.aport.service.UserService;
-import com.aport.command.LogoutCommand;
-import com.aport.command.PaymentCommand;
 
 
 public class CustomerState extends AbstractUserState {
@@ -15,24 +10,28 @@ public class CustomerState extends AbstractUserState {
     public void initializeCommands() {
         commands.put(1, new ViewFlightsCommand());
         commands.put(2, new CreateReservationCommand());
-        commands.put(3, new ViewReservationsCommand());
-        commands.put(4, new PaymentCommand());
-        commands.put(5, new LogoutCommand());
+        commands.put(3, new ModifyReservationCommand());
+        commands.put(4, new CancelReservationCommand());
+        commands.put(5, new ViewReservationsCommand());
+        commands.put(6, new PaymentCommand());
+        commands.put(7, new LogoutCommand());
     }
 
 
     @Override
     public void displayMenu() {
         System.out.println("1. 항공편 검색/선택");
-        System.out.println("2. 예약하기");
-        System.out.println("3. 내 예약 조회");
-        System.out.println("4. 티켓 발권");
-        System.out.println("5. 로그아웃");
+        System.out.println("2. 예약 생성");
+        System.out.println("3. 예약 수정");
+        System.out.println("4. 예약 삭제");
+        System.out.println("5. 내 예약 조회");
+        System.out.println("6. 티켓 발권");
+        System.out.println("7. 로그아웃");
     }
 
     @Override
     protected boolean isExitChoice(int choice) {
-        return choice == 5;
+        return choice == 7;
     }
 
     @Override

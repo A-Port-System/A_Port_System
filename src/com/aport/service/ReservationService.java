@@ -46,4 +46,17 @@ public class ReservationService extends BaseService {
         }
         return userReservations;
     }
+
+    public Reservation getReservationById(String reservationId) {
+        for (Reservation reservation : reservationList) {
+            if (reservation.getReservationId().equals(reservationId)) {
+                return reservation;
+            }
+        }
+        return null;
+    }
+
+    public boolean cancelReservation(Reservation reservation) {
+        return reservationList.removeIf(r -> r.getReservationId().equals(reservation.getReservationId()));
+    }
 }
