@@ -1,9 +1,14 @@
 package com.aport.strategy.signup;
 
 import com.aport.app.InputUtil;
+import com.aport.service.FileService;
 import com.aport.service.UserService;
+import com.aport.strategy.file.OfficerFileStrategy;
+import com.aport.strategy.file.FileStrategy;
 import com.aport.user.Officer;
 import com.aport.user.User;
+
+import java.io.File;
 import java.util.Map;
 
 public class OfficerSignupStrategy implements SignupStrategy {
@@ -40,6 +45,10 @@ public class OfficerSignupStrategy implements SignupStrategy {
             .isAdmin(isAdmin)
             .build();
         userMap.put(id, user);
+
+        FileStrategy fileStrategy = new OfficerFileStrategy();
+        FileService fileService = FileService.getInstance(fileStrategy);
+        fileService.save(new File("data/officer_data.dat").getAbsolutePath());
         System.out.println("회원가입 완료!");
     }
 }

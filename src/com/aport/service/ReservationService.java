@@ -1,8 +1,10 @@
 package com.aport.service;
 
 import com.aport.reservation.Reservation;
+import com.aport.strategy.file.*;
 import com.aport.user.User;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +21,21 @@ public class ReservationService extends BaseService {
         return instance;
     }
 
-    public void createReservation(Reservation reservation) {
+    public void addReservation(Reservation reservation) {
         reservationList.add(reservation);
+        FileStrategy fileStrategy = new ReservationFileStrategy();
+        FileService fileService = FileService.getInstance(fileStrategy);
+        fileService.save(new File("data/reservations.dat").getAbsolutePath());
         System.out.println("예약 성공!");
         System.out.println(reservation.getReservationInfo());
     }
 
-    public List<Reservation> getReservationsForUser(User user) {
-        if (!validateLogin(user)) return new ArrayList<>();
-
-        List<Reservation> userReservations = new ArrayList<>();
+    public List<Reservation> getReservations() {
+        List<Reservation> reservations = new ArrayList<>();
         for (Reservation reservation : reservationList) {
-            if (reservation.getUser().getId().equals(user.getId())) {
-                userReservations.add(reservation);
-            }
+            reservations.add(reservation);
         }
-        return userReservations;
+        return reservations;
     }
 
     public List<Reservation> getReservations(User user) {
@@ -47,7 +48,7 @@ public class ReservationService extends BaseService {
         return userReservations;
     }
 
-    public Reservation getReservationById(String reservationId) {
+    public Reservation getReservation(String reservationId) {
         for (Reservation reservation : reservationList) {
             if (reservation.getReservationId().equals(reservationId)) {
                 return reservation;
@@ -56,7 +57,13 @@ public class ReservationService extends BaseService {
         return null;
     }
 
-    public boolean cancelReservation(Reservation reservation) {
-        return reservationList.removeIf(r -> r.getReservationId().equals(reservation.getReservationId()));
+    public boolean removeReservation(Reservation reservation) {
+        boolean removed = reservationList.removeIf(r -> r.getReservationId().equals(reservation.getReservationId()));
+        if (removed) {
+            FileStrategy fileStrategy = new ReservationFileStrategy();
+            FileService fileService = FileService.getInstance(fileStrategy);
+            fileService.save(new File("data/reservations.dat").getAbsolutePath());
+        }
+        return removed;
     }
 }

@@ -9,7 +9,7 @@ public class CancelFlightCommand implements Command {
         System.out.println("=== 항공권 취소 ===");
         String flightNumber = InputUtil.readLine("취소할 항공편 번호 입력: ");
 
-        boolean success = FlightService.getInstance().cancelFlight(flightNumber);
+        boolean success = FlightService.getInstance().removeFlight(flightNumber);
         if (success) {
             System.out.println("항공권이 성공적으로 취소되었습니다.");
         } else {

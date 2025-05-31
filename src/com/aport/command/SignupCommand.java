@@ -30,6 +30,6 @@ public class SignupCommand implements Command {
                 return;
         }
 
-        UserService.getInstance().createUser();
+        UserService.getInstance().addUser();
     }
 }

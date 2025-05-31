@@ -8,7 +8,7 @@ public class ViewFlightsCommand implements Command {
 
     @Override
     public void execute() {
-        List<Flight> flights = FlightService.getInstance().getAllFlights();
+        List<Flight> flights = FlightService.getInstance().getFlights();
         if (flights.isEmpty()) {
             System.out.println("등록된 항공권이 없습니다.");
             return;

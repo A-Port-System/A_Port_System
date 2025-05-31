@@ -1,6 +1,9 @@
 package com.aport.user;
 
+import java.io.Serializable;
+
 public class Customer extends User {
+
     private String email;
     private String phoneNumber;
     private String address;
@@ -20,7 +23,7 @@ public class Customer extends User {
         this.isVip = builder.isVip;
     }
 
-    public static class Builder {
+    public static class Builder implements Serializable {
         private String username;
         private String password;
         private String name;

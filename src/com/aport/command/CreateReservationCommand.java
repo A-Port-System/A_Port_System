@@ -16,7 +16,7 @@ public class CreateReservationCommand implements Command {
     public void execute() {
         if (!UserService.getInstance().validateLogin(UserService.getInstance().getCurrentUser())) return;
 
-        List<Flight> flights = FlightService.getInstance().getAllFlights();
+        List<Flight> flights = FlightService.getInstance().getFlights();
         System.out.println("\n=== 항공편 목록 ===");
         for (int i = 0; i < flights.size(); i++) {
             System.out.println((i + 1) + ". " + flights.get(i).getFlightInfo());
@@ -30,6 +30,6 @@ public class CreateReservationCommand implements Command {
 
         Flight selectedFlight = flights.get(flightIndex);
         Reservation reservation = new Reservation(UserService.getInstance().getCurrentUser(), selectedFlight);
-        ReservationService.getInstance().createReservation(reservation);
+        ReservationService.getInstance().addReservation(reservation);
     }
 }

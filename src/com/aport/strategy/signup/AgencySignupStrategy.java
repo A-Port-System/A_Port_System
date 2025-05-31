@@ -5,6 +5,9 @@ import com.aport.service.UserService;
 import com.aport.user.Agency;
 import com.aport.user.User;
 import java.util.Map;
+import com.aport.service.FileService;
+import com.aport.strategy.file.*;
+import java.io.*;
 
 public class AgencySignupStrategy implements SignupStrategy {
 
@@ -44,6 +47,11 @@ public class AgencySignupStrategy implements SignupStrategy {
             .isPartner(isPartner)
             .build();
         userMap.put(id, user);
+
+        FileStrategy fileStrategy = new AgencyFileStrategy();
+        FileService fileService = FileService.getInstance(fileStrategy);
+        fileService.save(new File("data/agency_data.dat").getAbsolutePath());
+
         System.out.println("회원가입 완료!");
     }
 }

@@ -20,7 +20,7 @@ public class Officer extends User {
         this.isAdmin = builder.isAdmin;
     }
 
-    public static class Builder {
+    public static class Builder implements java.io.Serializable {
         private String username;
         private String password;
         private String name;

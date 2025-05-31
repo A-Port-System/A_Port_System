@@ -16,7 +16,7 @@ public class CreateFlightCommand implements Command {
         int price = InputUtil.readInt("가격 입력: ");
 
         Flight flight = new Flight(flightNumber, departure, destination, departureTime, arrivalTime, price);
-        FlightService.getInstance().createFlight(flight);
+        FlightService.getInstance().addFlight(flight);
 
         System.out.println("항공권이 성공적으로 생성되었습니다.");
     }

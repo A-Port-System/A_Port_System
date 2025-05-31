@@ -18,7 +18,7 @@ public class ModifyReservationCommand implements Command {
         
         User user = UserService.getInstance().getCurrentUser();
 
-        if (ReservationService.getInstance().getReservationsForUser(user).isEmpty()) {
+        if (ReservationService.getInstance().getReservations(user).isEmpty()) {
             System.out.println("예약이 없습니다.");
             return;
         }
@@ -26,20 +26,19 @@ public class ModifyReservationCommand implements Command {
         System.out.println("=== 예약 수정 ===");
 
         System.out.println("예약 목록:");
-        for (Reservation reservation : ReservationService.getInstance().getReservationsForUser(user)) {
+        for (Reservation reservation : ReservationService.getInstance().getReservations(user)) {
             System.out.println(reservation.getReservationInfo());
         }
 
         String reservationId = InputUtil.readLine("수정할 예약 번호 입력: ");
 
-        Reservation reservation = ReservationService.getInstance().getReservationById(reservationId);
+        Reservation reservation = ReservationService.getInstance().getReservation(reservationId);
         if (reservation == null) {
             System.out.println("예약 번호를 찾을 수 없습니다.");
             return;
         }
 
-
-        List<Flight> flights = FlightService.getInstance().getAllFlights();
+        List<Flight> flights = FlightService.getInstance().getFlights();
         System.out.println("\n=== 항공편 목록 ===");
         for (int i = 0; i < flights.size(); i++) {
             System.out.println((i + 1) + ". " + flights.get(i).getFlightInfo());

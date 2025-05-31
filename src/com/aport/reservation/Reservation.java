@@ -4,7 +4,9 @@ import com.aport.user.User;
 import com.aport.flight.Flight;
 import java.time.LocalDateTime;
 
-public class Reservation {
+import java.io.Serializable;
+
+public class Reservation implements Serializable {
     private static int reservationCounter = 1;
 
     private String reservationId;

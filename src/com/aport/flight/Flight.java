@@ -1,6 +1,8 @@
 package com.aport.flight;
 
-public class Flight {
+import java.io.Serializable;
+
+public class Flight implements Serializable {
     private String flightNumber;
     private String departure;
     private String arrival;

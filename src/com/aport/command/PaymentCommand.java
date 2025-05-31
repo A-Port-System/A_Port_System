@@ -14,7 +14,7 @@ public class PaymentCommand implements Command {
 
         Reservation reservation = null;
         System.out.println("결제할 예약을 선택하세요.");
-        List<Reservation> reservations = ReservationService.getInstance().getReservationsForUser(user);
+        List<Reservation> reservations = ReservationService.getInstance().getReservations(user);
         for (int i = 0; i < reservations.size(); i++) {
             System.out.printf("%d. %s\n", i + 1, reservations.get(i).getReservationInfo());
         }
@@ -35,7 +35,7 @@ public class PaymentCommand implements Command {
         if (cards.isEmpty()) {
             System.out.println("등록된 카드가 없습니다. 카드를 먼저 등록합니다.");
             String cardNumber = InputUtil.readLine("카드 번호 입력: ");
-            paymentService.createCard(user, cardNumber);
+            paymentService.addCard(user, cardNumber);
             cards = user.getRegisteredCards();
         }
 
@@ -57,7 +57,7 @@ public class PaymentCommand implements Command {
                 break;
             } else if (selected == cards.size() + 1) {
                 String newCard = InputUtil.readLine("새 카드 번호 입력: ");
-                paymentService.createCard(user, newCard);
+                paymentService.addCard(user, newCard);
                 cards = user.getRegisteredCards();
             } else {
                 System.out.println("잘못된 입력입니다. 다시 선택하세요.");

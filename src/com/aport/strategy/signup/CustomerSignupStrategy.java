@@ -1,9 +1,14 @@
 package com.aport.strategy.signup;
 
 import com.aport.app.InputUtil;
+import com.aport.service.FileService;
 import com.aport.service.UserService;
+import com.aport.strategy.file.CustomerFileStrategy;
+import com.aport.strategy.file.FileStrategy;
 import com.aport.user.Customer;
 import com.aport.user.User;
+
+import java.io.File;
 import java.util.Map;
 
 public class CustomerSignupStrategy implements SignupStrategy {
@@ -40,6 +45,10 @@ public class CustomerSignupStrategy implements SignupStrategy {
             .isVip(isVip)
             .build();
         userMap.put(id, user);
+
+        FileStrategy fileStrategy = new CustomerFileStrategy();
+        FileService fileService = FileService.getInstance(fileStrategy);
+        fileService.save(new File("data/customer_data.dat").getAbsolutePath());
         System.out.println("회원가입 완료!");
     }
 }

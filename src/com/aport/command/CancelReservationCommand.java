@@ -16,7 +16,7 @@ public class CancelReservationCommand implements Command {
 
         User user = UserService.getInstance().getCurrentUser();
 
-        if (ReservationService.getInstance().getReservationsForUser(user).isEmpty()) {
+        if (ReservationService.getInstance().getReservations(user).isEmpty()) {
             System.out.println("예약이 없습니다.");
             return;
         }
@@ -24,19 +24,19 @@ public class CancelReservationCommand implements Command {
         System.out.println("=== 예약 취소 ===");
 
         System.out.println("예약 목록:");
-        for (Reservation reservation : ReservationService.getInstance().getReservationsForUser(user)) {
+        for (Reservation reservation : ReservationService.getInstance().getReservations(user)) {
             System.out.println(reservation.getReservationInfo());
         }
         
         String reservationId = InputUtil.readLine("취소할 예약 번호 입력: ");
 
-        Reservation reservation = ReservationService.getInstance().getReservationById(reservationId);
+        Reservation reservation = ReservationService.getInstance().getReservation(reservationId);
         if (reservation == null) {
             System.out.println("예약 번호를 찾을 수 없습니다.");
             return;
         }
 
-        if (ReservationService.getInstance().cancelReservation(reservation)) {
+        if (ReservationService.getInstance().removeReservation(reservation)) {
             System.out.println("예약이 성공적으로 취소되었습니다.");
         } else {
             System.out.println("예약 취소에 실패했습니다. 다시 시도해주세요.");

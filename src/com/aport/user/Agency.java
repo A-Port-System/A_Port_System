@@ -1,4 +1,5 @@
 package com.aport.user;
+import java.io.Serializable;
 
 public class Agency extends User {
     private String agencyCode;
@@ -24,7 +25,7 @@ public class Agency extends User {
         this.isPartner = builder.isPartner;
     }
 
-    public static class Builder {
+    public static class Builder implements Serializable {
         private String username;
         private String password;
         private String name;

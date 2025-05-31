@@ -1,18 +1,23 @@
 package com.aport.user;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public abstract class User {
-    private String id;
-    private String password;
-    private String name;
-    private List<String> registeredCards = new ArrayList<>();
-    private int mileage = 0;
+public abstract class User implements Serializable {
+    protected String id;
+    protected String password;
+    protected String name;
+    protected List<String> registeredCards = new ArrayList<>();
+    protected int mileage = 0;
 
     public User(String username, String password, String name) {
         this.id = username;
         this.password = password;
         this.name = name;
+    }
+
+    public User() {
+        // 기본 생성자: 직렬화된 데이터를 로드할 때 사용됩니다.
     }
 
     public String getId() { return id; }

@@ -20,8 +20,14 @@ public class ModifyFlightCommand implements Command {
         String newDestination = InputUtil.readLine("새 도착지 입력 (현재: " + flight.getDestination() + "): ");
         int newPrice = InputUtil.readInt("새 가격 입력 (현재: " + flight.getPrice() + "): ");
 
-        FlightService.getInstance().modifyFlight(flight, newDeparture, newDestination, newPrice);
+        if (newDeparture.isEmpty() || newDestination.isEmpty() || newPrice <= 0) {
+            System.out.println("입력값이 올바르지 않습니다. 다시 시도해주세요.");
+            return;
+        }
 
+        flight.setDeparture(newDeparture);
+        flight.setDestination(newDestination);
+        flight.setPrice(newPrice);
         System.out.println("항공권이 성공적으로 수정되었습니다.");
     }
 }

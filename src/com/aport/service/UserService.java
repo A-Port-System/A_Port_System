@@ -59,7 +59,7 @@ public class UserService extends BaseService {
         this.signupStrategy = signupStrategy;
     }
 
-    public void createUser() {
+    public void addUser() {
         if (signupStrategy != null) {
             signupStrategy.signUp();
         } else {

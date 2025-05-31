@@ -14,11 +14,11 @@ public class PaymentService extends BaseService {
         return instance;
     }
 
-    public void createCard(User user, String cardNumber) {
+    public void addCard(User user, String cardNumber) {
         user.addCard(cardNumber);
     }
 
-    public void deleteCard(User user, String cardNumber) {
+    public void removeCard(User user, String cardNumber) {
         user.removeCard(cardNumber);
     }
 }

@@ -1,6 +1,9 @@
 package com.aport.service;
 
 import com.aport.flight.Flight;
+import com.aport.strategy.file.*;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,30 +28,12 @@ public class FlightService {
         flightList.add(new Flight("KE789", "Busan", "Los Angeles", "2025-06-03 15:00", "2025-06-03 23:00", 1500000));
     }
 
-    public List<Flight> getAllFlights() {
+    public List<Flight> getFlights() {
         return new ArrayList<>(flightList);
     }
 
-    public Flight selectFlight(int index) {
+    public Flight getFlight(int index) {
         return (index >= 0 && index < flightList.size()) ? flightList.get(index) : null;
-    }
-
-    public int getFlightCount() {
-        return flightList.size();
-    }
-
-    public void createFlight(Flight flight) {
-        flightList.add(flight);
-    }
-
-    public boolean cancelFlight(String flightNumber) {
-        return flightList.removeIf(flight -> flight.getFlightNumber().equals(flightNumber));
-    }
-    
-    public void modifyFlight(Flight flight, String newDeparture, String newDestination, int newPrice) {
-    	 flight.setDeparture(newDeparture);
-         flight.setDestination(newDestination);
-         flight.setPrice(newPrice);
     }
 
     public Flight getFlight(String flightNumber) {
@@ -56,5 +41,23 @@ public class FlightService {
                 .filter(flight -> flight.getFlightNumber().equals(flightNumber))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void addFlight(Flight flight) {
+        flightList.add(flight);
+
+        FileStrategy flightFileStrategy = new FlightFileStrategy();
+        FileService fileService = FileService.getInstance(flightFileStrategy);
+        fileService.save(new File("data/flights.dat").getAbsolutePath());
+    }
+
+    public boolean removeFlight(String flightNumber) {
+        boolean removed = flightList.removeIf(flight -> flight.getFlightNumber().equals(flightNumber));
+        if (removed) {
+            FileStrategy flightFileStrategy = new FlightFileStrategy();
+            FileService fileService = FileService.getInstance(flightFileStrategy);
+            fileService.save(new File("data/flights.dat").getAbsolutePath());
+        }
+        return removed;
     }
 }
