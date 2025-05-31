@@ -1,13 +1,13 @@
 package com.aport.user.command;
 
 import com.aport.app.InputUtil;
-import com.aport.common.Command;
+import com.aport.common.command.Command;
 import com.aport.user.service.UserService;
 
 public class LoginCommand implements Command {
 
     @Override
-    public void execute() {
+    public Object execute() {
         System.out.println("로그인");
         System.out.println("아이디와 비밀번호를 입력하세요.");
         String id = InputUtil.readLine("아이디(이메일): ");
@@ -19,5 +19,7 @@ public class LoginCommand implements Command {
         } else {
             System.out.println("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
         }
+        
+        return null;
     }
 }

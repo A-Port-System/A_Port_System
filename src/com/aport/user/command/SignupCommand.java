@@ -5,12 +5,12 @@ import com.aport.user.strategy.AgencySignupStrategy;
 import com.aport.user.strategy.CustomerSignupStrategy;
 import com.aport.user.strategy.OfficerSignupStrategy;
 import com.aport.app.InputUtil;
-import com.aport.common.Command;
+import com.aport.common.command.Command;
 
 public class SignupCommand implements Command {
 
     @Override
-    public void execute() {
+    public Object execute() {
         System.out.println("[회원 유형 선택]");
         System.out.println("1. 고객");
         System.out.println("2. 직원");
@@ -30,9 +30,10 @@ public class SignupCommand implements Command {
                 break;
             default:
                 System.out.println("잘못된 입력입니다.");
-                return;
+                return null;
         }
 
         UserService.getInstance().addUser();
+        return null;
     }
 }

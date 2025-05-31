@@ -1,5 +1,6 @@
 package com.aport.user.state;
 
+import com.aport.common.command.UndoCommand;
 import com.aport.flight.command.SearchFlightsCommand;
 import com.aport.flight.command.ViewFlightsCommand;
 import com.aport.payment.command.PaymentCommand;
@@ -9,7 +10,6 @@ import com.aport.reservation.command.ModifyReservationCommand;
 import com.aport.reservation.command.ViewReservationsCommand;
 import com.aport.user.command.LogoutCommand;
 import com.aport.user.service.UserService;
-
 
 public class CustomerState extends AbstractUserState {
 
@@ -22,7 +22,8 @@ public class CustomerState extends AbstractUserState {
         commands.put(5, new CancelReservationCommand());
         commands.put(6, new ViewReservationsCommand());
         commands.put(7, new PaymentCommand());
-        commands.put(8, new LogoutCommand());
+        commands.put(8, new UndoCommand());
+        commands.put(9, new LogoutCommand());
     }
 
 
@@ -35,12 +36,13 @@ public class CustomerState extends AbstractUserState {
         System.out.println("5. 예약 삭제");
         System.out.println("6. 내 예약 조회");
         System.out.println("7. 티켓 발권");
-        System.out.println("8. 로그아웃");
+        System.out.println("8. 뒤로가기");
+        System.out.println("9. 로그아웃");
     }
 
     @Override
     protected boolean isExitChoice(int choice) {
-        return choice == 8;
+        return choice == 9;
     }
 
     @Override

@@ -1,14 +1,14 @@
 package com.aport.user.state;
 
 import com.aport.app.InputUtil;
-import com.aport.common.Command;
 import com.aport.common.Invoker;
-import com.aport.common.UserState;
+import com.aport.common.command.Command;
 import com.aport.user.domain.Customer;
 import com.aport.user.domain.Officer;
 import com.aport.user.domain.User;
 import com.aport.user.service.UserService;
 
+import java.io.IOException;
 import java.util.*;
 
 public abstract class AbstractUserState implements UserState {
@@ -21,6 +21,7 @@ public abstract class AbstractUserState implements UserState {
 	
 	@Override
 	public final void handleMenu() {
+		clearConsole();
 		displayMenu();
 		System.out.print("선택: ");
 		int choice = InputUtil.readInt();
@@ -36,7 +37,7 @@ public abstract class AbstractUserState implements UserState {
 			return;
 		}
 
-		Invoker invoker = new Invoker();
+		Invoker invoker = Invoker.getInstance();
 		invoker.setCommand(commands.get(choice));
 		invoker.run();
 	}
@@ -56,6 +57,15 @@ public abstract class AbstractUserState implements UserState {
 			UserService.getInstance().setState(new GuestState());
 		}
 	}
+
+	public static void clearConsole() {
+		InputUtil.readLine("다음으로 계속하려면 Enter 키를 누르세요...");
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	protected abstract void displayMenu();
 	protected abstract boolean isExitChoice(int choice);

@@ -2,9 +2,9 @@ package com.aport.user.service;
 
 import com.aport.user.domain.User;
 import com.aport.user.state.GuestState;
+import com.aport.user.state.UserState;
 import com.aport.user.strategy.SignupStrategy;
 import com.aport.common.BaseService;
-import com.aport.common.UserState;
 
 import java.util.HashMap;
 import java.util.Map;

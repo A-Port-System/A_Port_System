@@ -5,15 +5,16 @@ import com.aport.reservation.service.ReservationService;
 import com.aport.user.domain.User;
 import com.aport.user.service.UserService;
 import com.aport.app.InputUtil;
-import com.aport.common.Command;
+import com.aport.common.command.Command;
 import com.aport.payment.service.PaymentService;
+
 
 import java.util.List;
 
 public class PaymentCommand implements Command {
 
     @Override
-    public void execute() {
+    public Object execute() {
         User user = UserService.getInstance().getCurrentUser();
 
         Reservation reservation = null;
@@ -26,7 +27,7 @@ public class PaymentCommand implements Command {
         int selected = InputUtil.readInt("예약 번호 선택: ");
         if (selected < 1 || selected > reservations.size()) {
             System.out.println("잘못된 입력입니다.");
-            return;
+            return null;
         }
 
         reservation = reservations.get(selected - 1);
@@ -55,7 +56,7 @@ public class PaymentCommand implements Command {
 
             if (selected == 0) {
                 System.out.println("결제를 취소합니다.");
-                return;
+                return null;
             } else if (selected >= 1 && selected <= cards.size()) {
                 selectedCard = cards.get(selected - 1);
                 break;
@@ -109,5 +110,6 @@ public class PaymentCommand implements Command {
         System.out.println("\n[도착지 정보]");
         System.out.printf("도착지: %s\n", reservation.getFlight().getArrival());
         System.out.printf("도착일: %s\n", reservation.getFlight().getArrivalTime());
+        return null;
     }
 }

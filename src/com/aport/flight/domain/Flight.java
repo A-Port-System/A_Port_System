@@ -1,8 +1,9 @@
 package com.aport.flight.domain;
 
 import java.io.Serializable;
+import com.aport.common.Prototype;
 
-public class Flight implements Serializable {
+public class Flight implements Serializable, Prototype<Flight> {
     private String flightNumber;
     private String departure;
     private String arrival;
@@ -78,5 +79,10 @@ public class Flight implements Serializable {
 
     public void setDestination(String destination) {
         this.arrival = destination;
+    }
+
+    @Override
+    public Flight copy() {
+        return new Flight(flightNumber, departure, arrival, departureTime, arrivalTime, price);
     }
 }

@@ -1,13 +1,13 @@
 package com.aport.user.command;
 
-import com.aport.common.Command;
+import com.aport.common.command.Command;
 import com.aport.user.service.UserService;
 import com.aport.user.state.GuestState;
 
 public class LogoutCommand implements Command {
 
     @Override
-    public void execute() {
+    public Object execute() {
         if (UserService.getInstance().getState() instanceof GuestState) {
             System.out.println("현재 로그인 상태가 아닙니다.");
         } else {
@@ -15,5 +15,6 @@ public class LogoutCommand implements Command {
             UserService.getInstance().setState(new GuestState());
             System.out.println("로그아웃 되었습니다.");
         }
+        return null;
     }
 }

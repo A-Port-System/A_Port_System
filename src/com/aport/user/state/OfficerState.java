@@ -4,6 +4,7 @@ import com.aport.flight.command.CancelFlightCommand;
 import com.aport.flight.command.CreateFlightCommand;
 import com.aport.flight.command.ModifyFlightCommand;
 import com.aport.flight.command.ViewFlightsCommand;
+import com.aport.common.command.UndoCommand;
 import com.aport.user.command.LogoutCommand;
 import com.aport.user.service.UserService;
 
@@ -14,7 +15,8 @@ public class OfficerState extends AbstractUserState {
         commands.put(2, new ViewFlightsCommand());
         commands.put(3, new CancelFlightCommand());
         commands.put(4, new ModifyFlightCommand());
-        commands.put(5, new LogoutCommand());
+        commands.put(5, new UndoCommand());
+        commands.put(6, new LogoutCommand());
     }
 
 
@@ -24,12 +26,13 @@ public class OfficerState extends AbstractUserState {
         System.out.println("2. 항공권 조회");
         System.out.println("3. 항공권 취소");
         System.out.println("4. 항공권 수정");
-        System.out.println("5. 로그아웃");
+        System.out.println("5. 뒤로가기기");
+        System.out.println("6. 로그아웃");
     }
 
     @Override
     protected boolean isExitChoice(int choice) {
-    	return choice == 5;
+    	return choice == 6;
     }
     
     @Override

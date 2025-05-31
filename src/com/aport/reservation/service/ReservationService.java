@@ -29,8 +29,6 @@ public class ReservationService extends BaseService {
         FileStrategy fileStrategy = new ReservationFileStrategy();
         FileService fileService = FileService.getInstance(fileStrategy);
         fileService.save(new File("data/reservations.dat").getAbsolutePath());
-        System.out.println("예약 성공!");
-        System.out.println(reservation.getReservationInfo());
     }
 
     public List<Reservation> getReservations() {

@@ -1,5 +1,4 @@
 package com.aport.app;
-import com.aport.common.UserState;
 import com.aport.file.service.FileService;
 import com.aport.file.strategy.AgencyFileStrategy;
 import com.aport.file.strategy.CustomerFileStrategy;
@@ -8,6 +7,7 @@ import com.aport.file.strategy.FlightFileStrategy;
 import com.aport.file.strategy.OfficerFileStrategy;
 import com.aport.file.strategy.ReservationFileStrategy;
 import com.aport.user.service.UserService;
+import com.aport.user.state.UserState;
 
 import java.io.File;
 import java.util.Scanner;

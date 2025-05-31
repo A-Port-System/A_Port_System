@@ -3,7 +3,7 @@ package com.aport.reservation.command;
 import java.util.List;
 
 import com.aport.app.InputUtil;
-import com.aport.common.Command;
+import com.aport.common.command.Command;
 import com.aport.flight.domain.Flight;
 import com.aport.flight.service.FlightService;
 import com.aport.reservation.domain.Reservation;
@@ -14,16 +14,15 @@ import com.aport.user.service.UserService;
 public class ModifyReservationCommand implements Command {
 
     @Override
-    public void execute() {
-        
-        if (!UserService.getInstance().validateLogin(UserService.getInstance().getCurrentUser())) return;
+    public Object execute() {
 
-        
+        if (!UserService.getInstance().validateLogin(UserService.getInstance().getCurrentUser())) return null;
+
         User user = UserService.getInstance().getCurrentUser();
 
         if (ReservationService.getInstance().getReservations(user).isEmpty()) {
             System.out.println("예약이 없습니다.");
-            return;
+            return null;
         }
 
         System.out.println("=== 예약 수정 ===");
@@ -38,7 +37,7 @@ public class ModifyReservationCommand implements Command {
         Reservation reservation = ReservationService.getInstance().getReservation(reservationId);
         if (reservation == null) {
             System.out.println("예약 번호를 찾을 수 없습니다.");
-            return;
+            return null;
         }
 
         List<Flight> flights = FlightService.getInstance().getFlights();
@@ -50,13 +49,15 @@ public class ModifyReservationCommand implements Command {
         int flightIndex = InputUtil.readInt("예약할 항공편 번호 입력: ") - 1;
         if (flightIndex < 0 || flightIndex >= flights.size()) {
             System.out.println("잘못된 선택입니다.");
-            return;
+            return null;
         }
 
         Flight selectedFlight = flights.get(flightIndex);
+        Reservation res = reservation.copy();
         reservation.setFlight(selectedFlight);
         
         System.out.println("예약이 성공적으로 수정되었습니다.");
+        return res;
     }
 }
 

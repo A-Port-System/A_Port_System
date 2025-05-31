@@ -1,13 +1,13 @@
 package com.aport.reservation.domain;
 
+import com.aport.common.Prototype;
 import com.aport.flight.domain.Flight;
 import com.aport.user.domain.User;
 
 import java.time.LocalDateTime;
-
 import java.io.Serializable;
 
-public class Reservation implements Serializable {
+public class Reservation implements Serializable, Prototype<Reservation> {
     private static int reservationCounter = 1;
 
     private String reservationId;
@@ -67,4 +67,13 @@ public class Reservation implements Serializable {
 	public void setPaid(boolean isPaid) {
 		this.isPaid = isPaid;
 	}
+
+    @Override
+    public Reservation copy() {
+        Reservation copy = new Reservation(this.user, this.flight);
+        copy.setReservationId(this.reservationId);
+        copy.setReservationDate(this.reservationDate);
+        copy.setPaid(this.isPaid);
+        return copy;
+    }
 }
