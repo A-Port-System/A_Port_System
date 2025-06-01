@@ -1,4 +1,4 @@
-package com.aport.common.decorator;
+package com.aport.common;
 
 import com.aport.common.command.Command;
 
@@ -7,6 +7,10 @@ public abstract class Decorator implements Command {
 
     public Decorator(Command command) {
         this.decoratedCommand = command;
+    }
+
+    public Command getInnerCommand() {
+        return decoratedCommand;
     }
 
     public Object execute() {

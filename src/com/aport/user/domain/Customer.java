@@ -1,8 +1,13 @@
 package com.aport.user.domain;
 
-import java.io.Serializable;
+import com.aport.common.Observer;
+import com.aport.flight.domain.FlightNotice;
 
-public class Customer extends User {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Customer extends User implements Observer {
 
     private String email;
     private String phoneNumber;
@@ -11,6 +16,7 @@ public class Customer extends User {
     private String gender;
     private String nationality;
     private boolean isVip;
+    private List<FlightNotice> flightNotices = new ArrayList<>();
 
     private Customer(Builder builder) {
         super(builder.username, builder.password, builder.name);
@@ -102,5 +108,14 @@ public class Customer extends User {
 
     public void setVip(boolean isVip) {
         this.isVip = isVip;
+    }
+
+    @Override
+    public void update(FlightNotice notice) {
+        flightNotices.add(notice);
+    }
+
+    public List<FlightNotice> getFlightNotices() {
+        return flightNotices;
     }
 }

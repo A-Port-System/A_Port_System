@@ -41,6 +41,9 @@ public class Invoker {
         while(!commandHistory.isEmpty()) {
             Pair<Command, Object> pair = commandHistory.pop();
             Command cmd = pair.first;
+            while (cmd instanceof Decorator) {
+                cmd = ((Decorator) cmd).getInnerCommand();
+            }
             Object result = pair.second;
             if (cmd instanceof Undoable) {
                 ((Undoable) cmd).undo(result);

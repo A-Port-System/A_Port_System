@@ -1,13 +1,14 @@
-package com.aport.common.decorator;
+package com.aport.user.decorator;
 
 import com.aport.user.service.UserService;
 import com.aport.user.command.LoginCommand;
 import com.aport.user.domain.User;
+import com.aport.common.Decorator;
 import com.aport.common.Invoker;
 import com.aport.common.command.Command;
 
 public class ValidateDecorator extends Decorator {
-    ValidateDecorator(Command command) {
+    public ValidateDecorator(Command command) {
         super(command);
     }
 

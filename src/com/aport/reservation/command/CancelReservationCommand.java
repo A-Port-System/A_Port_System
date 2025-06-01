@@ -7,27 +7,19 @@ import com.aport.reservation.service.ReservationService;
 import com.aport.user.domain.User;
 import com.aport.user.service.UserService;
 import com.aport.common.command.Undoable;
+import com.aport.flight.domain.Flight;
+import com.aport.common.Observer;
 
 public class CancelReservationCommand implements Command, Undoable {
     
     @Override
     public Object execute() {
-
-        if (!UserService.getInstance().validateLogin(UserService.getInstance().getCurrentUser())) return null;
-
         User user = UserService.getInstance().getCurrentUser();
-
         if (ReservationService.getInstance().getReservations(user).isEmpty()) {
             System.out.println("예약이 없습니다.");
             return null;
         }
-
         System.out.println("=== 예약 취소 ===");
-
-        System.out.println("예약 목록:");
-        for (Reservation reservation : ReservationService.getInstance().getReservations(user)) {
-            System.out.println(reservation.getReservationInfo());
-        }
         
         String reservationId = InputUtil.readLine("취소할 예약 번호 입력: ");
 
@@ -38,11 +30,11 @@ public class CancelReservationCommand implements Command, Undoable {
         }
 
         Reservation res = reservation.copy();
-        if (ReservationService.getInstance().removeReservation(reservation)) {
-            System.out.println("예약이 성공적으로 취소되었습니다.");
-        } else {
-            System.out.println("예약 취소에 실패했습니다. 다시 시도해주세요.");
-        }
+        Flight selectedFlight = reservation.getFlight();
+        Observer observer = (Observer) user;
+        selectedFlight.removeObserver(observer);
+        ReservationService.getInstance().removeReservation(reservation);
+        System.out.println("예약이 성공적으로 취소되었습니다.");
         return res;
     }
 
@@ -52,6 +44,9 @@ public class CancelReservationCommand implements Command, Undoable {
             ReservationService service = ReservationService.getInstance();
             Reservation canceledReservation = (Reservation) result;
             service.addReservation(canceledReservation);
+            Flight flight = canceledReservation.getFlight();
+            Observer observer = (Observer) UserService.getInstance().getCurrentUser();
+            flight.addObserver(observer);
             System.out.println("예약 취소가 되돌려졌습니다.");
         } else {
             System.out.println("잘못된 예약 정보입니다.");

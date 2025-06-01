@@ -9,7 +9,10 @@ import com.aport.reservation.command.CreateReservationCommand;
 import com.aport.reservation.command.ModifyReservationCommand;
 import com.aport.reservation.command.ViewReservationsCommand;
 import com.aport.user.command.LogoutCommand;
+import com.aport.user.decorator.ValidateDecorator;
 import com.aport.user.service.UserService;
+import com.aport.flight.decorator.ViewFlightNoticesDecorator;
+import com.aport.reservation.decorator.ViewReservationsDecorator;
 
 public class CustomerState extends AbstractUserState {
 
@@ -17,13 +20,13 @@ public class CustomerState extends AbstractUserState {
     public void initializeCommands() {
         commands.put(1, new ViewFlightsCommand());
         commands.put(2, new SearchFlightsCommand());
-        commands.put(3, new CreateReservationCommand());
-        commands.put(4, new ModifyReservationCommand());
-        commands.put(5, new CancelReservationCommand());
-        commands.put(6, new ViewReservationsCommand());
-        commands.put(7, new PaymentCommand());
-        commands.put(8, new UndoCommand());
-        commands.put(9, new LogoutCommand());
+        commands.put(3, new ValidateDecorator(new CreateReservationCommand()));
+        commands.put(4, new ValidateDecorator(new ViewReservationsDecorator(new ModifyReservationCommand())));
+        commands.put(5, new ValidateDecorator(new ViewReservationsDecorator(new CancelReservationCommand())));
+        commands.put(6, new ValidateDecorator(new ViewFlightNoticesDecorator(new ViewReservationsCommand())));
+        commands.put(7, new ValidateDecorator(new ViewReservationsDecorator(new PaymentCommand())));
+        commands.put(8, new ValidateDecorator(new UndoCommand()));
+        commands.put(9, new ValidateDecorator(new LogoutCommand()));
     }
 
 
