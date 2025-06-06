@@ -7,17 +7,59 @@ public abstract class User implements Serializable {
     protected String id;
     protected String password;
     protected String name;
+    protected String email;
+    protected String phoneNumber;
+    protected UserType userType;
+
     protected List<String> registeredCards = new ArrayList<>();
     protected int mileage = 0;
 
-    public User(String username, String password, String name) {
-        this.id = username;
-        this.password = password;
-        this.name = name;
+    protected User(Builder builder) {
+        this.id = builder.id;
+        this.password = builder.password;
+        this.name = builder.name;
+        this.email = builder.email;
+        this.phoneNumber = builder.phoneNumber;
+        
     }
+    
+    public static class Builder {
+        private String id;
+        private String password;
+        private String name;
+        private String email;
+        private String phoneNumber;
+        private UserType userType;
 
-    public User() {
-        // 기본 생성자: 직렬화된 데이터를 로드할 때 사용됩니다.
+        // Agency 전용
+        protected String agencyName;
+        
+        // Officer 전용
+        protected String department;
+        
+        public Builder userType(UserType userType) { this.userType = userType; return this; }
+        public Builder id(String id) { this.id = id; return this; }
+        public Builder password(String password) { this.password = password; return this; }
+        public Builder name(String name) { this.name = name; return this; }
+        public Builder email(String email) { this.email = email; return this; }
+        public Builder phoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; return this; }
+
+        public Builder agencyName(String agencyName) { this.agencyName = agencyName; return this; }
+
+        public Builder department(String department) { this.department = department; return this; }
+
+        public User build() {
+            switch (userType) {
+                case CUSTOMER:
+                    return Customer.of(this);
+                case AGENCY:
+                    return Agency.of(this);
+                case OFFICER:
+                    return Officer.of(this);
+                default:
+                    throw new IllegalArgumentException("Invalid user type");
+            }
+        }
     }
 
     public String getId() { return id; }

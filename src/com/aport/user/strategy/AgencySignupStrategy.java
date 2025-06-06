@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.aport.user.domain.Agency;
 import com.aport.user.domain.User;
+import com.aport.user.domain.UserType;
 import com.aport.user.service.UserService;
 
 import java.io.*;
@@ -25,30 +26,17 @@ public class AgencySignupStrategy implements SignupStrategy {
             return;
         }
         String password = InputUtil.readLine("비밀번호: ");
-        String name = InputUtil.readLine("이름: ");
-        String agencyCode = InputUtil.readLine("에이전시 코드: ");
         String agencyName = InputUtil.readLine("에이전시명: ");
-        String agencyType = InputUtil.readLine("에이전시 유형: ");
-        String contactPerson = InputUtil.readLine("담당자명: ");
         String contactPhone = InputUtil.readLine("담당자 연락처: ");
         String contactEmail = InputUtil.readLine("담당자 이메일: ");
-        String address = InputUtil.readLine("주소: ");
-        String registrationNumber = InputUtil.readLine("사업자등록번호: ");
-        boolean isPartner = InputUtil.readLine("파트너 여부(Y/N): ").equalsIgnoreCase("Y");
 
-        User user = new Agency.Builder()
-            .username(id)
+        User user = new User.Builder()
+    	    .userType(UserType.AGENCY)
+            .id(id)
             .password(password)
-            .name(name)
-            .agencyCode(agencyCode)
             .agencyName(agencyName)
-            .agencyType(agencyType)
-            .contactPerson(contactPerson)
-            .contactPhone(contactPhone)
-            .contactEmail(contactEmail)
-            .address(address)
-            .registrationNumber(registrationNumber)
-            .isPartner(isPartner)
+            .phoneNumber(contactPhone)
+            .email(contactEmail)
             .build();
         userMap.put(id, user);
 
