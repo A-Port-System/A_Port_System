@@ -1,7 +1,5 @@
 package com.aport.reservation.command;
 
-import java.util.List;
-
 import com.aport.app.InputUtil;
 import com.aport.common.command.Command;
 import com.aport.flight.domain.Flight;
@@ -10,13 +8,12 @@ import com.aport.reservation.domain.Reservation;
 import com.aport.reservation.service.ReservationService;
 import com.aport.user.domain.User;
 import com.aport.user.service.UserService;
+import java.util.List;
 
 public class ModifyReservationCommand implements Command {
 
     @Override
     public Object execute() {
-
-        if (!UserService.getInstance().validateLogin(UserService.getInstance().getCurrentUser())) return null;
 
         User user = UserService.getInstance().getCurrentUser();
 

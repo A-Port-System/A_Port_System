@@ -3,16 +3,17 @@ package com.aport.user.state;
 import com.aport.common.command.UndoCommand;
 import com.aport.flight.command.SearchFlightsCommand;
 import com.aport.flight.command.ViewFlightsCommand;
+import com.aport.flight.decorator.ViewFlightNoticesDecorator;
+import com.aport.flight.decorator.ViewFlightsDecorator;
 import com.aport.payment.command.PaymentCommand;
 import com.aport.reservation.command.CancelReservationCommand;
 import com.aport.reservation.command.CreateReservationCommand;
 import com.aport.reservation.command.ModifyReservationCommand;
 import com.aport.reservation.command.ViewReservationsCommand;
+import com.aport.reservation.decorator.ViewReservationsDecorator;
 import com.aport.user.command.LogoutCommand;
 import com.aport.user.decorator.ValidateDecorator;
 import com.aport.user.service.UserService;
-import com.aport.flight.decorator.ViewFlightNoticesDecorator;
-import com.aport.reservation.decorator.ViewReservationsDecorator;
 
 public class CustomerState extends AbstractUserState {
 
@@ -20,7 +21,7 @@ public class CustomerState extends AbstractUserState {
     public void initializeCommands() {
         commands.put(1, new ViewFlightsCommand());
         commands.put(2, new SearchFlightsCommand());
-        commands.put(3, new ValidateDecorator(new CreateReservationCommand()));
+        commands.put(3, new ValidateDecorator(new ViewFlightsDecorator(new CreateReservationCommand())));
         commands.put(4, new ValidateDecorator(new ViewReservationsDecorator(new ModifyReservationCommand())));
         commands.put(5, new ValidateDecorator(new ViewReservationsDecorator(new CancelReservationCommand())));
         commands.put(6, new ValidateDecorator(new ViewFlightNoticesDecorator(new ViewReservationsCommand())));

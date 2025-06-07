@@ -1,17 +1,13 @@
 package com.aport.reservation.service;
 
-import com.aport.common.BaseService;
 import com.aport.file.service.FileService;
-import com.aport.file.strategy.FileStrategy;
-import com.aport.file.strategy.ReservationFileStrategy;
 import com.aport.reservation.domain.Reservation;
 import com.aport.user.domain.User;
-
-import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReservationService extends BaseService {
+public class ReservationService implements Serializable {
     private static ReservationService instance;
     private final List<Reservation> reservationList = new ArrayList<>();
 
@@ -24,11 +20,14 @@ public class ReservationService extends BaseService {
         return instance;
     }
 
+    public static void setInstance(ReservationService reservationService) {
+        instance = reservationService;
+    }
+
     public void addReservation(Reservation reservation) {
         reservationList.add(reservation);
-        FileStrategy fileStrategy = new ReservationFileStrategy();
-        FileService fileService = FileService.getInstance(fileStrategy);
-        fileService.save(new File("data/reservations.dat").getAbsolutePath());
+        FileService fileService = FileService.getInstance();
+        fileService.save();
     }
 
     public List<Reservation> getReservations() {
@@ -61,9 +60,8 @@ public class ReservationService extends BaseService {
     public boolean removeReservation(Reservation reservation) {
         boolean removed = reservationList.removeIf(r -> r.getReservationId().equals(reservation.getReservationId()));
         if (removed) {
-            FileStrategy fileStrategy = new ReservationFileStrategy();
-            FileService fileService = FileService.getInstance(fileStrategy);
-            fileService.save(new File("data/reservations.dat").getAbsolutePath());
+            FileService fileService = FileService.getInstance();
+            fileService.save();
         }
         return removed;
     }

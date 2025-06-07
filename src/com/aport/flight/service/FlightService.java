@@ -1,14 +1,12 @@
 package com.aport.flight.service;
 
 import com.aport.file.service.FileService;
-import com.aport.file.strategy.FileStrategy;
-import com.aport.file.strategy.FlightFileStrategy;
 import com.aport.flight.domain.Flight;
-import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlightService {
+public class FlightService implements Serializable{
     private static FlightService instance;
     private final List<Flight> flightList = new ArrayList<>();
 
@@ -21,6 +19,10 @@ public class FlightService {
             instance = new FlightService();
         }
         return instance;
+    }
+
+    public static void setInstance(FlightService service) {
+        instance = service;
     }
 
     private void initializeFlights() {
@@ -47,17 +49,15 @@ public class FlightService {
     public void addFlight(Flight flight) {
         flightList.add(flight);
 
-        FileStrategy flightFileStrategy = new FlightFileStrategy();
-        FileService fileService = FileService.getInstance(flightFileStrategy);
-        fileService.save(new File("data/flights.dat").getAbsolutePath());
+        FileService fileService = FileService.getInstance();
+        fileService.save();
     }
 
     public boolean removeFlight(String flightNumber) {
         boolean removed = flightList.removeIf(flight -> flight.getFlightNumber().equals(flightNumber));
         if (removed) {
-            FileStrategy flightFileStrategy = new FlightFileStrategy();
-            FileService fileService = FileService.getInstance(flightFileStrategy);
-            fileService.save(new File("data/flights.dat").getAbsolutePath());
+            FileService fileService = FileService.getInstance();
+            fileService.save();
         }
         return removed;
     }
