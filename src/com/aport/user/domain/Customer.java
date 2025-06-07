@@ -2,8 +2,6 @@ package com.aport.user.domain;
 
 import com.aport.common.Observer;
 import com.aport.flight.domain.FlightNotice;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

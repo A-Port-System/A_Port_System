@@ -4,11 +4,9 @@ import com.aport.app.InputUtil;
 import com.aport.file.service.FileService;
 import com.aport.file.strategy.CustomerFileStrategy;
 import com.aport.file.strategy.FileStrategy;
-import com.aport.user.domain.Customer;
 import com.aport.user.domain.User;
 import com.aport.user.domain.UserType;
 import com.aport.user.service.UserService;
-
 import java.io.File;
 import java.util.Map;
 
