@@ -6,6 +6,7 @@ import com.aport.file.strategy.FileStrategy;
 import com.aport.file.strategy.OfficerFileStrategy;
 import com.aport.user.domain.Officer;
 import com.aport.user.domain.User;
+import com.aport.user.domain.UserType;
 import com.aport.user.service.UserService;
 
 import java.io.File;
@@ -30,6 +31,7 @@ public class OfficerSignupStrategy implements SignupStrategy {
 
 
         User user = new User.Builder()
+    	    .userType(UserType.OFFICER)
             .id(id)
             .password(password)
             .name(name)

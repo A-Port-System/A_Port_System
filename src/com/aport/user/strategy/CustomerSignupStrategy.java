@@ -6,6 +6,7 @@ import com.aport.file.strategy.CustomerFileStrategy;
 import com.aport.file.strategy.FileStrategy;
 import com.aport.user.domain.Customer;
 import com.aport.user.domain.User;
+import com.aport.user.domain.UserType;
 import com.aport.user.service.UserService;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class CustomerSignupStrategy implements SignupStrategy {
         String phoneNumber = InputUtil.readLine("전화번호: ");
 
         User user = new User.Builder()
+    	    .userType(UserType.CUSTOMER)
             .id(id)
             .password(password)
             .name(name)
