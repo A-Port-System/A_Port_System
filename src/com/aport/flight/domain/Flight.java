@@ -13,6 +13,8 @@ public class Flight implements Serializable, Prototype<Flight> {
     private String departureTime;
     private String arrivalTime;
     private int price;
+    private boolean[] seats = new boolean[150];
+
 
     private List<Observer> observers = new ArrayList<>();
     private List<FlightNotice> flightNotices = new ArrayList<>();
@@ -26,6 +28,20 @@ public class Flight implements Serializable, Prototype<Flight> {
         this.price = price;
     }
 
+    public boolean[] getSeats() {
+        return seats;
+    }
+
+    public void reserveSeat(int index) {
+        if (index < 0 || index >= seats.length) throw new IllegalArgumentException("좌석 인덱스 오류");
+        seats[index] = true;
+    }
+
+    public boolean isSeatTaken(int index) {
+        return seats[index];
+    }
+
+    
     public String getFlightInfo() {
         return String.format("%s: %s -> %s, %s ~ %s, %d원",
         		getFlightNumber(), getDeparture(), getArrival(), getDepartureTime(), getArrivalTime(), getPrice());
