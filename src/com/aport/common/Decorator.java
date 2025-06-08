@@ -13,6 +13,7 @@ public abstract class Decorator implements Command {
         return decoratedCommand;
     }
 
+    @Override
     public Object execute() {
         return decoratedCommand.execute();
     }
