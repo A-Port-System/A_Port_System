@@ -5,6 +5,7 @@ import com.aport.common.Observer;
 import com.aport.common.command.Command;
 import com.aport.common.command.Undoable;
 import com.aport.flight.domain.Flight;
+import com.aport.flight.proxy.FlightServiceProxy;
 import com.aport.flight.service.FlightService;
 import com.aport.reservation.domain.Reservation;
 import com.aport.reservation.service.ReservationService;
@@ -19,7 +20,7 @@ public class CreateReservationCommand implements Command, Undoable {
     @Override
     public Object execute() {
 
-        List<Flight> flights = FlightService.getInstance().getFlights();
+        List<Flight> flights = FlightServiceProxy.getInstance().getFlights();
         int flightIndex = InputUtil.readInt("예약할 항공편 번호 입력: ") - 1;
         if (flightIndex < 0 || flightIndex >= flights.size()) {
             System.out.println("잘못된 선택입니다.");

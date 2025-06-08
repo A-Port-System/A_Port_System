@@ -3,6 +3,7 @@ package com.aport.flight.command;
 import com.aport.app.InputUtil;
 import com.aport.common.command.*;
 import com.aport.flight.domain.Flight;
+import com.aport.flight.proxy.FlightServiceProxy;
 import com.aport.flight.service.FlightService;
 
 public class CreateFlightCommand implements Command, Undoable {
@@ -17,7 +18,7 @@ public class CreateFlightCommand implements Command, Undoable {
         int price = InputUtil.readInt("가격 입력: ");
 
         Flight flight = new Flight(flightNumber, departure, destination, departureTime, arrivalTime, price);
-        FlightService.getInstance().addFlight(flight);
+        FlightServiceProxy.getInstance().addFlight(flight);
 
         System.out.println("항공권이 성공적으로 생성되었습니다.");
         return flight;
@@ -26,7 +27,7 @@ public class CreateFlightCommand implements Command, Undoable {
     @Override
     public void undo(Object result) {
         if (result instanceof Flight) {
-            FlightService service = FlightService.getInstance();
+        	FlightServiceProxy service = FlightServiceProxy.getInstance();
             if (service.removeFlight(((Flight) result).getFlightNumber())) {
                 System.out.println("항공권 생성이 취소되었습니다.");
             } else {
