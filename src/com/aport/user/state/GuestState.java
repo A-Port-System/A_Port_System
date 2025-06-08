@@ -1,16 +1,16 @@
 package com.aport.user.state;
 
-import com.aport.user.command.ExitCommand;
-import com.aport.user.command.LoginCommand;
-import com.aport.user.command.SignupCommand;
+import com.aport.user.command.ExitCommandFactory;
+import com.aport.user.command.LoginCommandFactory;
+import com.aport.user.command.SignupCommandFactory;
 
 public class GuestState extends AbstractUserState {
 
     @Override
     public void initializeCommands() {
-        commands.put(1, new SignupCommand());
-        commands.put(2, new LoginCommand());
-        commands.put(0, new ExitCommand());
+        commands.put(1, new SignupCommandFactory().create());
+        commands.put(2, new LoginCommandFactory().create());
+        commands.put(0, new ExitCommandFactory().create());
     }
 
     @Override

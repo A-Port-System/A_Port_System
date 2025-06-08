@@ -1,17 +1,18 @@
 package com.aport.user.decorator;
 
-import com.aport.user.service.UserService;
-import com.aport.user.command.LoginCommand;
-import com.aport.user.domain.User;
 import com.aport.common.Decorator;
 import com.aport.common.Invoker;
 import com.aport.common.command.Command;
+import com.aport.user.command.LoginCommand;
+import com.aport.user.domain.User;
+import com.aport.user.service.UserService;
 
 public class ValidateDecorator extends Decorator {
     public ValidateDecorator(Command command) {
         super(command);
     }
 
+    @Override
     public Object execute() {
         if (validate()) {
             return super.execute();

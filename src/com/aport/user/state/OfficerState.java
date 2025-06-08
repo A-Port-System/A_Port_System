@@ -1,25 +1,23 @@
 package com.aport.user.state;
 
-import com.aport.common.command.UndoCommand;
-import com.aport.flight.command.CancelFlightCommand;
-import com.aport.flight.command.CreateFlightCommand;
-import com.aport.flight.command.ModifyFlightCommand;
-import com.aport.flight.command.PostFlightNoticeCommand;
-import com.aport.flight.command.ViewFlightsCommand;
-import com.aport.flight.decorator.ViewFlightsDecorator;
-import com.aport.user.command.LogoutCommand;
-import com.aport.user.decorator.ValidateDecorator;
+import com.aport.common.command.UndoCommandFactory;
+import com.aport.flight.command.CancelFlightCommandFactory;
+import com.aport.flight.command.CreateFlightCommandFactory;
+import com.aport.flight.command.ModifyFlightCommandFactory;
+import com.aport.flight.command.PostFlightNoticeCommandFactory;
+import com.aport.flight.command.ViewFlightsCommandFactory;
+import com.aport.user.command.LogoutCommandFactory;
 
 public class OfficerState extends AbstractUserState {
     @Override
     public void initializeCommands() {
-        commands.put(1, new ValidateDecorator(new CreateFlightCommand()));
-        commands.put(2, new ViewFlightsCommand());
-        commands.put(3, new ValidateDecorator(new ViewFlightsDecorator(new CancelFlightCommand())));
-        commands.put(4, new ValidateDecorator(new ViewFlightsDecorator(new ModifyFlightCommand())));
-        commands.put(5, new ValidateDecorator(new ViewFlightsDecorator(new PostFlightNoticeCommand())));
-        commands.put(6, new ValidateDecorator(new UndoCommand()));
-        commands.put(7, new ValidateDecorator(new LogoutCommand()));
+        commands.put(1, new CreateFlightCommandFactory().create());
+        commands.put(2, new ViewFlightsCommandFactory().create());
+        commands.put(3, new CancelFlightCommandFactory().create());
+        commands.put(4, new ModifyFlightCommandFactory().create());
+        commands.put(5, new PostFlightNoticeCommandFactory().create());
+        commands.put(6, new UndoCommandFactory().create());
+        commands.put(7, new LogoutCommandFactory().create());
     }
 
 
