@@ -61,7 +61,13 @@ public abstract class AbstractUserState implements UserState {
 	public static void clearConsole() {
 		InputUtil.readLine("다음으로 계속하려면 Enter 키를 누르세요...");
         try {
-            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        	String os = System.getProperty("os.name").toLowerCase();
+            if (os.contains("win")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

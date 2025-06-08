@@ -6,6 +6,7 @@ import com.aport.file.strategy.CustomerFileStrategy;
 import com.aport.file.strategy.FileStrategy;
 import com.aport.user.domain.Customer;
 import com.aport.user.domain.User;
+import com.aport.user.domain.UserType;
 import com.aport.user.service.UserService;
 
 import java.io.File;
@@ -26,23 +27,14 @@ public class CustomerSignupStrategy implements SignupStrategy {
         String name = InputUtil.readLine("이름: ");
         String email = InputUtil.readLine("이메일: ");
         String phoneNumber = InputUtil.readLine("전화번호: ");
-        String address = InputUtil.readLine("주소: ");
-        String birthDate = InputUtil.readLine("생년월일: ");
-        String gender = InputUtil.readLine("성별: ");
-        String nationality = InputUtil.readLine("국적: ");
-        boolean isVip = InputUtil.readLine("VIP 여부(Y/N): ").equalsIgnoreCase("Y");
 
-        User user = new Customer.Builder()
-            .username(id)
+        User user = new User.Builder()
+    	    .userType(UserType.CUSTOMER)
+            .id(id)
             .password(password)
             .name(name)
             .email(email)
             .phoneNumber(phoneNumber)
-            .address(address)
-            .birthDate(birthDate)
-            .gender(gender)
-            .nationality(nationality)
-            .isVip(isVip)
             .build();
         userMap.put(id, user);
 
