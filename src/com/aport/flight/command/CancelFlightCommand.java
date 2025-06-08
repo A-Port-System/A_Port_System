@@ -1,9 +1,8 @@
 package com.aport.flight.command;
 
 import com.aport.app.InputUtil;
-import com.aport.common.command.Command;
+import com.aport.common.command.*;
 import com.aport.common.command.Undoable;
-import com.aport.flight.service.FlightService;
 import com.aport.flight.domain.Flight;
 import com.aport.flight.proxy.FlightServiceProxy;
 
@@ -28,5 +27,12 @@ public class CancelFlightCommand implements Command, Undoable {
     	FlightServiceProxy service = FlightServiceProxy.getInstance();
         service.addFlight((Flight) result);
         System.out.println("항공권 취소가 되돌려졌습니다.");
+    }
+}
+
+class CancelFlightCommandFactory extends CommandFactory {
+    @Override
+    protected Command createCommand() {
+        return new CancelFlightCommand();
     }
 }
