@@ -4,9 +4,8 @@ import com.aport.common.Prototype;
 import com.aport.flight.domain.Flight;
 import com.aport.seat.domain.Seat;
 import com.aport.user.domain.User;
-
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class Reservation implements Serializable, Prototype<Reservation> {
     private static int reservationCounter = 1;
@@ -92,5 +91,13 @@ public class Reservation implements Serializable, Prototype<Reservation> {
 
     public Seat getSeat() {
         return seat;
+    }
+
+    public static int getReservationCounter() {
+        return reservationCounter;
+    }
+
+    public static void setReservationCounter(int reservationCounter) {
+        Reservation.reservationCounter = reservationCounter;
     }
 }
