@@ -4,17 +4,16 @@ import com.aport.user.domain.User;
 import com.aport.user.state.GuestState;
 import com.aport.user.state.UserState;
 import com.aport.user.strategy.SignupStrategy;
-import com.aport.common.BaseService;
-
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserService extends BaseService {
+public class UserService implements Serializable {
     private static UserService instance;
     private final Map<String, User> userMap = new HashMap<>();
-    private User currentUser = null;
-    private SignupStrategy signupStrategy;
-    private UserState state;
+    private transient User currentUser = null;
+    private transient SignupStrategy signupStrategy;
+    private transient UserState state;
 
     private UserService() {
         state = new GuestState();
@@ -27,10 +26,10 @@ public class UserService extends BaseService {
         return instance;
     }
 
-    @Override
-    public boolean validateLogin(User user) {
-        return super.validateLogin(user);
+    public static void setInstance(UserService userService) {
+        instance = userService;
     }
+
 
     public Map<String, User> getUserMap() {
         return userMap;
@@ -74,6 +73,9 @@ public class UserService extends BaseService {
     }
 
     public UserState getState() {
+        if (state == null) {
+            state = new GuestState();
+        }
         return state;
     }
 }

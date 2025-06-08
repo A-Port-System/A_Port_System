@@ -2,17 +2,10 @@ package com.aport.user.strategy;
 
 import com.aport.app.InputUtil;
 import com.aport.file.service.FileService;
-import com.aport.file.strategy.AgencyFileStrategy;
-import com.aport.file.strategy.FileStrategy;
-
-import java.util.Map;
-
-import com.aport.user.domain.Agency;
 import com.aport.user.domain.User;
 import com.aport.user.domain.UserType;
 import com.aport.user.service.UserService;
-
-import java.io.*;
+import java.util.Map;
 
 public class AgencySignupStrategy implements SignupStrategy {
 
@@ -40,9 +33,8 @@ public class AgencySignupStrategy implements SignupStrategy {
             .build();
         userMap.put(id, user);
 
-        FileStrategy fileStrategy = new AgencyFileStrategy();
-        FileService fileService = FileService.getInstance(fileStrategy);
-        fileService.save(new File("data/agency_data.dat").getAbsolutePath());
+        FileService fileService = FileService.getInstance();
+        fileService.save();
 
         System.out.println("회원가입 완료!");
     }

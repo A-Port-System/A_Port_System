@@ -1,5 +1,4 @@
 package com.aport.user.domain;
-import java.io.Serializable;
 
 public class Agency extends User {
     private String agencyName;

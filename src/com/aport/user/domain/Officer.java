@@ -1,6 +1,6 @@
 package com.aport.user.domain;
 
-public class Officer extends User {
+public class Officer extends User{
     private String department;
 
     private Officer(Builder builder) {

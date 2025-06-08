@@ -1,16 +1,15 @@
 package com.aport.reservation.command;
 
-import com.aport.user.service.UserService;
-import com.aport.reservation.domain.Reservation;
-import com.aport.reservation.service.ReservationService;
 import com.aport.app.InputUtil;
+import com.aport.common.Observer;
 import com.aport.common.command.Command;
+import com.aport.common.command.Undoable;
 import com.aport.flight.domain.Flight;
 import com.aport.flight.service.FlightService;
-import com.aport.common.command.Undoable;
+import com.aport.reservation.domain.Reservation;
+import com.aport.reservation.service.ReservationService;
 import com.aport.user.domain.User;
-import com.aport.common.Observer;
-
+import com.aport.user.service.UserService;
 import java.util.List;
 
 public class CreateReservationCommand implements Command, Undoable {
@@ -19,7 +18,6 @@ public class CreateReservationCommand implements Command, Undoable {
 
     @Override
     public Object execute() {
-        if (!UserService.getInstance().validateLogin(UserService.getInstance().getCurrentUser())) return null;
 
         List<Flight> flights = FlightService.getInstance().getFlights();
         int flightIndex = InputUtil.readInt("예약할 항공편 번호 입력: ") - 1;
