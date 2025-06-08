@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlightService implements Serializable{
+public class FlightService implements FlightServiceInterface, Serializable {
     private static FlightService instance;
     private final List<Flight> flightList = new ArrayList<>();
 

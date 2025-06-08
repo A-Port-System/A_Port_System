@@ -5,9 +5,9 @@ import com.aport.common.command.Command;
 import com.aport.flight.builder.DelayedFlightNoticeBuilder;
 import com.aport.flight.builder.FlightNoticeDirector;
 import com.aport.flight.builder.PreDepartureFlightNoticeBuilder;
+import com.aport.flight.proxy.FlightServiceProxy;
 import com.aport.flight.domain.Flight;
 import com.aport.flight.domain.FlightNotice;
-import com.aport.flight.service.FlightService;
 
 public class PostFlightNoticeCommand implements Command {
 
@@ -20,7 +20,7 @@ public class PostFlightNoticeCommand implements Command {
             System.out.println("잘못된 항공권 ID입니다. 다시 시도해주세요.");
             return null;
         }
-        Flight flight = FlightService.getInstance().getFlight(flightId-1);
+        Flight flight = FlightServiceProxy.getInstance().getFlight(flightId-1);
 
         System.out.println("양식 선택");
         System.out.println("1. 지연 공지");
@@ -50,6 +50,7 @@ public class PostFlightNoticeCommand implements Command {
                 
                 break;
         }
+
         flight.notifyObservers(notice);
         return null;
     }

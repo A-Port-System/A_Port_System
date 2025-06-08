@@ -3,6 +3,7 @@ package com.aport.flight.command;
 import com.aport.app.InputUtil;
 import com.aport.common.command.Command;
 import com.aport.flight.domain.Flight;
+import com.aport.flight.proxy.FlightServiceProxy;
 import com.aport.flight.service.FlightService;
 import com.aport.common.command.Undoable;
 
@@ -12,7 +13,7 @@ public class ModifyFlightCommand implements Command, Undoable {
         System.out.println("=== 항공권 수정 ===");
         String flightNumber = InputUtil.readLine("수정할 항공편 번호 입력: ");
 
-        Flight flight = FlightService.getInstance().getFlight(flightNumber);
+        Flight flight = FlightServiceProxy.getInstance().getFlight(flightNumber);
         if (flight == null) {
             System.out.println("항공편 번호를 찾을 수 없습니다.");
             return null;
@@ -37,7 +38,7 @@ public class ModifyFlightCommand implements Command, Undoable {
     @Override
     public void undo(Object result) {
         if (result instanceof Flight) {
-            FlightService service = FlightService.getInstance();
+        	FlightServiceProxy service = FlightServiceProxy.getInstance();
             Flight originalFlight = service.getFlight(((Flight) result).getFlightNumber());
             if (originalFlight != null) {
                 Flight newFlight = service.getFlight(originalFlight.getFlightNumber());
