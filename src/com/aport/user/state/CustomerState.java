@@ -13,7 +13,6 @@ import com.aport.reservation.command.ViewReservationsCommand;
 import com.aport.reservation.decorator.ViewReservationsDecorator;
 import com.aport.user.command.LogoutCommand;
 import com.aport.user.decorator.ValidateDecorator;
-import com.aport.user.service.UserService;
 
 public class CustomerState extends AbstractUserState {
 
@@ -42,16 +41,5 @@ public class CustomerState extends AbstractUserState {
         System.out.println("7. 티켓 발권");
         System.out.println("8. 뒤로가기");
         System.out.println("9. 로그아웃");
-    }
-
-    @Override
-    protected boolean isExitChoice(int choice) {
-        return choice == 9;
-    }
-
-    @Override
-    protected void handleExit() {
-        System.out.println("로그아웃합니다.");
-        UserService.getInstance().setState(new GuestState());
     }
 }

@@ -1,5 +1,6 @@
 package com.aport.user.state;
 
+import com.aport.user.command.ExitCommand;
 import com.aport.user.command.LoginCommand;
 import com.aport.user.command.SignupCommand;
 
@@ -9,6 +10,7 @@ public class GuestState extends AbstractUserState {
     public void initializeCommands() {
         commands.put(1, new SignupCommand());
         commands.put(2, new LoginCommand());
+        commands.put(0, new ExitCommand());
     }
 
     @Override
@@ -16,16 +18,5 @@ public class GuestState extends AbstractUserState {
         System.out.println("1. 회원가입");
         System.out.println("2. 로그인");
         System.out.println("0. 종료");
-    }
-
-    @Override
-    protected boolean isExitChoice(int choice) {
-    	return choice == 0;
-    }
-    
-    @Override
-    protected void handleExit() {
-    	System.out.println("프로그램을 종료합니다.");
-    	System.exit(0);
     }
 }

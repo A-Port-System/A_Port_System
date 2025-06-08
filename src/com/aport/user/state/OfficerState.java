@@ -1,14 +1,13 @@
 package com.aport.user.state;
 
+import com.aport.common.command.UndoCommand;
 import com.aport.flight.command.CancelFlightCommand;
 import com.aport.flight.command.CreateFlightCommand;
 import com.aport.flight.command.ModifyFlightCommand;
 import com.aport.flight.command.PostFlightNoticeCommand;
 import com.aport.flight.command.ViewFlightsCommand;
-import com.aport.common.command.UndoCommand;
-import com.aport.user.command.LogoutCommand;
-import com.aport.user.service.UserService;
 import com.aport.flight.decorator.ViewFlightsDecorator;
+import com.aport.user.command.LogoutCommand;
 import com.aport.user.decorator.ValidateDecorator;
 
 public class OfficerState extends AbstractUserState {
@@ -33,16 +32,5 @@ public class OfficerState extends AbstractUserState {
         System.out.println("5. 공지사항 생성");
         System.out.println("6. 뒤로가기");
         System.out.println("7. 로그아웃");
-    }
-
-    @Override
-    protected boolean isExitChoice(int choice) {
-    	return choice == 7;
-    }
-    
-    @Override
-    protected void handleExit() {
-    	System.out.println("로그아웃합니다.");
-    	UserService.getInstance().setState(new GuestState());
     }
 }

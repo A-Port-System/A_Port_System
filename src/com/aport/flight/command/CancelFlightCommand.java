@@ -3,8 +3,8 @@ package com.aport.flight.command;
 import com.aport.app.InputUtil;
 import com.aport.common.command.Command;
 import com.aport.common.command.Undoable;
-import com.aport.flight.service.FlightService;
 import com.aport.flight.domain.Flight;
+import com.aport.flight.service.FlightService;
 
 public class CancelFlightCommand implements Command, Undoable {
     @Override
