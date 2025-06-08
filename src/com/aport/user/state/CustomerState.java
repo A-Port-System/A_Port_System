@@ -14,6 +14,9 @@ import com.aport.reservation.decorator.ViewReservationsDecorator;
 import com.aport.user.command.LogoutCommand;
 import com.aport.user.decorator.ValidateDecorator;
 import com.aport.user.service.UserService;
+import com.aport.flight.decorator.ViewFlightNoticesDecorator;
+import com.aport.reservation.decorator.ViewReservationsDecorator;
+import com.aport.seat.command.SeatCommand;
 
 public class CustomerState extends AbstractUserState {
 
@@ -26,8 +29,9 @@ public class CustomerState extends AbstractUserState {
         commands.put(5, new ValidateDecorator(new ViewReservationsDecorator(new CancelReservationCommand())));
         commands.put(6, new ValidateDecorator(new ViewFlightNoticesDecorator(new ViewReservationsCommand())));
         commands.put(7, new ValidateDecorator(new ViewReservationsDecorator(new PaymentCommand())));
-        commands.put(8, new ValidateDecorator(new UndoCommand()));
-        commands.put(9, new ValidateDecorator(new LogoutCommand()));
+        commands.put(8, new ValidateDecorator(new ViewReservationsDecorator(new SeatCommand())));
+        commands.put(9, new ValidateDecorator(new UndoCommand()));
+        commands.put(10, new ValidateDecorator(new LogoutCommand()));
     }
 
 
@@ -40,8 +44,9 @@ public class CustomerState extends AbstractUserState {
         System.out.println("5. 예약 삭제");
         System.out.println("6. 내 예약 조회");
         System.out.println("7. 티켓 발권");
-        System.out.println("8. 뒤로가기");
-        System.out.println("9. 로그아웃");
+        System.out.println("8. 자리 선택");
+        System.out.println("9. 뒤로가기");
+        System.out.println("10. 로그아웃");
     }
 
     @Override
