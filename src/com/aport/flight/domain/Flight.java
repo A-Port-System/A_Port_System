@@ -2,6 +2,7 @@ package com.aport.flight.domain;
 
 import com.aport.common.Observer;
 import com.aport.common.Prototype;
+import com.aport.file.service.FileService;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,7 @@ public class Flight implements Serializable, Prototype<Flight> {
         for (Observer observer : observers) {
             observer.update(notice);
         }
+        FileService.getInstance().save();
     }
 
     public List<FlightNotice> getFlightNotices() {

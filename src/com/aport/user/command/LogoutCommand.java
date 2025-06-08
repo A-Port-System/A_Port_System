@@ -1,5 +1,6 @@
 package com.aport.user.command;
 
+import com.aport.common.Invoker;
 import com.aport.common.command.Command;
 import com.aport.user.service.UserService;
 import com.aport.user.state.GuestState;
@@ -14,6 +15,7 @@ public class LogoutCommand implements Command {
             UserService.getInstance().setCurrentUser(null);
             UserService.getInstance().setState(new GuestState());
             System.out.println("로그아웃 되었습니다.");
+            Invoker.getInstance().clearHistory();
         }
         return null;
     }

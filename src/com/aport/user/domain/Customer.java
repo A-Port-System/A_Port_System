@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer extends User implements Observer {
-    private List<FlightNotice> flightNotices = new ArrayList<>();
+    private final List<FlightNotice> flightNotices = new ArrayList<>();
 
     private Customer(Builder builder) {
         super(builder);

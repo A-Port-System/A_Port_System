@@ -6,6 +6,10 @@ public class FlightNotice implements Serializable {
     private String title;
     private String message;
 
+    public FlightNotice() {
+        // Default constructor
+    }
+
     public FlightNotice(String title, String message) {
         this.title = title;
         this.message = message;
