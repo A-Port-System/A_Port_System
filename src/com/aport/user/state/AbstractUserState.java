@@ -7,7 +7,6 @@ import com.aport.user.domain.Customer;
 import com.aport.user.domain.Officer;
 import com.aport.user.domain.User;
 import com.aport.user.service.UserService;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -25,11 +24,6 @@ public abstract class AbstractUserState implements UserState {
 		displayMenu();
 		System.out.print("선택: ");
 		int choice = InputUtil.readInt();
-		
-		if (isExitChoice(choice)) {
-			handleExit();
-			return;
-		}
 		
 		if (!commands.containsKey(choice)) {
 			System.out.println("잘못된 선택입니다. 다시 시도하세요.");
@@ -74,6 +68,4 @@ public abstract class AbstractUserState implements UserState {
     }
 	
 	protected abstract void displayMenu();
-	protected abstract boolean isExitChoice(int choice);
-	protected abstract void handleExit();
 }

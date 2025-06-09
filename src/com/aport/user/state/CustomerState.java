@@ -1,37 +1,30 @@
 package com.aport.user.state;
 
-import com.aport.common.command.UndoCommand;
-import com.aport.flight.command.SearchFlightsCommand;
-import com.aport.flight.command.ViewFlightsCommand;
-import com.aport.flight.decorator.ViewFlightNoticesDecorator;
-import com.aport.flight.decorator.ViewFlightsDecorator;
-import com.aport.payment.command.PaymentCommand;
-import com.aport.reservation.command.CancelReservationCommand;
-import com.aport.reservation.command.CreateReservationCommand;
-import com.aport.reservation.command.ModifyReservationCommand;
-import com.aport.reservation.command.ViewReservationsCommand;
-import com.aport.reservation.decorator.ViewReservationsDecorator;
-import com.aport.user.command.LogoutCommand;
-import com.aport.user.decorator.ValidateDecorator;
-import com.aport.user.service.UserService;
-import com.aport.flight.decorator.ViewFlightNoticesDecorator;
-import com.aport.reservation.decorator.ViewReservationsDecorator;
-import com.aport.seat.command.SelectSeatCommand;
+import com.aport.common.command.UndoCommandFactory;
+import com.aport.flight.command.SearchFlightsCommandFactory;
+import com.aport.flight.command.ViewFlightsCommandFactory;
+import com.aport.payment.command.PaymentCommandFactory;
+import com.aport.reservation.command.CancelReservationCommandFactory;
+import com.aport.reservation.command.CreateReservationCommandFactory;
+import com.aport.reservation.command.ModifyReservationCommandFactory;
+import com.aport.reservation.command.ViewReservationsCommandFactory;
+import com.aport.seat.command.SeatCommandFactory;
+import com.aport.user.command.LogoutCommandFactory;
 
 public class CustomerState extends AbstractUserState {
 
     @Override
     public void initializeCommands() {
-        commands.put(1, new ViewFlightsCommand());
-        commands.put(2, new SearchFlightsCommand());
-        commands.put(3, new ValidateDecorator(new ViewFlightsDecorator(new CreateReservationCommand())));
-        commands.put(4, new ValidateDecorator(new ViewReservationsDecorator(new ModifyReservationCommand())));
-        commands.put(5, new ValidateDecorator(new ViewReservationsDecorator(new CancelReservationCommand())));
-        commands.put(6, new ValidateDecorator(new ViewFlightNoticesDecorator(new ViewReservationsCommand())));
-        commands.put(7, new ValidateDecorator(new ViewReservationsDecorator(new PaymentCommand())));
-        commands.put(8, new ValidateDecorator(new ViewReservationsDecorator(new SelectSeatCommand())));
-        commands.put(9, new ValidateDecorator(new UndoCommand()));
-        commands.put(10, new ValidateDecorator(new LogoutCommand()));
+        commands.put(1, new ViewFlightsCommandFactory().create());
+        commands.put(2, new SearchFlightsCommandFactory().create());
+        commands.put(3, new CreateReservationCommandFactory().create());
+        commands.put(4, new ModifyReservationCommandFactory().create());
+        commands.put(5, new CancelReservationCommandFactory().create());
+        commands.put(6, new ViewReservationsCommandFactory().create());
+        commands.put(7, new PaymentCommandFactory().create());
+        commands.put(8, new SeatCommandFactory().create());
+        commands.put(9, new UndoCommandFactory().create());
+        commands.put(10, new LogoutCommandFactory().create());
     }
 
 
@@ -47,16 +40,5 @@ public class CustomerState extends AbstractUserState {
         System.out.println("8. 자리 선택");
         System.out.println("9. 뒤로가기");
         System.out.println("10. 로그아웃");
-    }
-
-    @Override
-    protected boolean isExitChoice(int choice) {
-        return choice == 9;
-    }
-
-    @Override
-    protected void handleExit() {
-        System.out.println("로그아웃합니다.");
-        UserService.getInstance().setState(new GuestState());
     }
 }

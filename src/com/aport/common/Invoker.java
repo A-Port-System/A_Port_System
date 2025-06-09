@@ -1,9 +1,8 @@
 package com.aport.common;
 
-import java.util.Stack;
 import com.aport.app.Pair;
-
 import com.aport.common.command.*;
+import java.util.Stack;
 
 public class Invoker {
     private static Invoker instance;
@@ -52,5 +51,9 @@ public class Invoker {
         }
         System.out.println("[오류] 되돌릴 수 있는 명령이 없습니다.");
         return;
+    }
+
+    public void clearHistory() {
+        commandHistory.clear();
     }
 }

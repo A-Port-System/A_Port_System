@@ -1,6 +1,7 @@
 package com.aport.file.service;
 
 import com.aport.flight.service.FlightService;
+import com.aport.reservation.domain.Reservation;
 import com.aport.reservation.service.ReservationService;
 import com.aport.user.service.UserService;
 import java.io.*;
@@ -22,6 +23,7 @@ public class FileService {
         all.put("users", UserService.getInstance());
         all.put("reservations", ReservationService.getInstance());
         all.put("flights", FlightService.getInstance());
+        all.put("reservation_counter", Reservation.getReservationCounter());
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath));
             oos.writeObject(all);
@@ -43,6 +45,7 @@ public class FileService {
             UserService.setInstance((UserService) all.get("users"));
             ReservationService.setInstance((ReservationService) all.get("reservations"));
             FlightService.setInstance((FlightService) all.get("flights"));
+            Reservation.setReservationCounter((Integer) all.get("reservation_counter"));
             ois.close();
             System.out.println("데이터가 성공적으로 로드되었습니다.");
         } catch (IOException | ClassNotFoundException e) {
