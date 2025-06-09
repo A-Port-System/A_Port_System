@@ -1,6 +1,8 @@
 package com.aport.seat.domain;
 
-public class EconomySeat implements Seat {
+import java.io.Serializable;
+
+public class EconomySeat implements Seat, Serializable {
     private final String seatNumber;
     private final int index;
 

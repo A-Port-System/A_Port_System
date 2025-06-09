@@ -1,6 +1,8 @@
 package com.aport.seat.domain;
 
-public class FirstSeat implements Seat {
+import java.io.Serializable;
+
+public class FirstSeat implements Seat, Serializable {
     private final String seatNumber;
     private int index;
 
