@@ -4,22 +4,8 @@ import com.aport.flight.domain.Flight;
 import com.aport.reservation.domain.Reservation;
 import com.aport.seat.domain.Seat;
 import com.aport.seat.factory.SeatFactory;
-import com.aport.user.domain.User;
-
-import java.util.List;
 
 public class SeatService {
-
-    public List<Reservation> getUserReservations(User user) {
-        return com.aport.reservation.service.ReservationService.getInstance().getReservations(user);
-    }
-
-    public Reservation selectReservation(List<Reservation> reservations, int selectedIndex) {
-        if (selectedIndex < 1 || selectedIndex > reservations.size()) {
-            throw new IllegalArgumentException("잘못된 예약 번호입니다.");
-        }
-        return reservations.get(selectedIndex - 1);
-    }
 
     public boolean hasSeat(Reservation reservation) {
         return reservation.getSeat() != null;

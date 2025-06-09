@@ -1,13 +1,14 @@
 package com.aport.seat.command;
 
-import java.util.List;
-
 import com.aport.app.InputUtil;
 import com.aport.common.command.Command;
 import com.aport.reservation.domain.Reservation;
+import com.aport.reservation.service.ReservationService;
 import com.aport.seat.service.SeatService;
 import com.aport.user.domain.User;
 import com.aport.user.service.UserService;
+
+import java.util.List;
 
 public class SelectSeatCommand implements Command {
 
@@ -16,7 +17,12 @@ public class SelectSeatCommand implements Command {
     @Override
     public Object execute() {
         User user = UserService.getInstance().getCurrentUser();
-        List<Reservation> reservations = seatService.getUserReservations(user);
+        List<Reservation> reservations = ReservationService.getInstance().getReservations(user);
+
+        if (reservations.isEmpty()) {
+            System.out.println("예약 내역이 없습니다.");
+            return null;
+        }
 
         System.out.println("\n예약을 선택하세요.");
         for (int i = 0; i < reservations.size(); i++) {
@@ -24,13 +30,12 @@ public class SelectSeatCommand implements Command {
         }
 
         int selected = InputUtil.readInt("예약 번호 선택: ");
-        Reservation reservation;
-        try {
-            reservation = seatService.selectReservation(reservations, selected);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        if (selected < 1 || selected > reservations.size()) {
+            System.out.println("잘못된 입력입니다.");
             return null;
         }
+
+        Reservation reservation = reservations.get(selected - 1);
 
         if (seatService.hasSeat(reservation)) {
             System.out.println("이미 좌석이 지정된 예약입니다: " + reservation.getSeat().getSeatNumber());
