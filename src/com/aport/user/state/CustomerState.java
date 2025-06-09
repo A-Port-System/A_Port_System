@@ -16,7 +16,7 @@ import com.aport.user.decorator.ValidateDecorator;
 import com.aport.user.service.UserService;
 import com.aport.flight.decorator.ViewFlightNoticesDecorator;
 import com.aport.reservation.decorator.ViewReservationsDecorator;
-import com.aport.seat.command.SeatCommand;
+import com.aport.seat.command.SelectSeatCommand;
 
 public class CustomerState extends AbstractUserState {
 
@@ -29,7 +29,7 @@ public class CustomerState extends AbstractUserState {
         commands.put(5, new ValidateDecorator(new ViewReservationsDecorator(new CancelReservationCommand())));
         commands.put(6, new ValidateDecorator(new ViewFlightNoticesDecorator(new ViewReservationsCommand())));
         commands.put(7, new ValidateDecorator(new ViewReservationsDecorator(new PaymentCommand())));
-        commands.put(8, new ValidateDecorator(new ViewReservationsDecorator(new SeatCommand())));
+        commands.put(8, new ValidateDecorator(new ViewReservationsDecorator(new SelectSeatCommand())));
         commands.put(9, new ValidateDecorator(new UndoCommand()));
         commands.put(10, new ValidateDecorator(new LogoutCommand()));
     }
