@@ -1,24 +1,42 @@
 package com.aport.seat.factory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.aport.seat.domain.BusinessSeat;
+import com.aport.seat.domain.BusinessSeatCreator;
 import com.aport.seat.domain.EconomySeat;
+import com.aport.seat.domain.EconomySeatCreator;
 import com.aport.seat.domain.FirstSeat;
+import com.aport.seat.domain.FirstSeatCreator;
 import com.aport.seat.domain.Seat;
+import com.aport.seat.domain.SeatCreator;
 
 public class SeatFactory {
-    public static Seat createSeat(String seatNumber) {
-        int index = getSeatIndex(seatNumber); 
+	private static final Map<String, SeatCreator> creators = new HashMap<>();
 
+    static {
+        creators.put("FIRST", new FirstSeatCreator());
+        creators.put("BUSINESS", new BusinessSeatCreator());
+        creators.put("ECONOMY", new EconomySeatCreator());
+    }
+
+    public static Seat createSeat(String seatNumber) {
+        int index = getSeatIndex(seatNumber);
         int number = Integer.parseInt(seatNumber.substring(1));
+
+        SeatCreator creator;
         if (number >= 1 && number <= 10) {
-            return new FirstSeat(seatNumber, index);
+            creator = creators.get("FIRST");
         } else if (number >= 11 && number <= 20) {
-            return new BusinessSeat(seatNumber, index);
+            creator = creators.get("BUSINESS");
         } else if (number >= 21 && number <= 30) {
-            return new EconomySeat(seatNumber, index);
+            creator = creators.get("ECONOMY");
         } else {
             throw new IllegalArgumentException("좌석 번호는 1~30번까지만 유효합니다.");
         }
+
+        return creator.createSeat(seatNumber, index);
     }
 
     public static int getSeatIndex(String seatNumber) {
