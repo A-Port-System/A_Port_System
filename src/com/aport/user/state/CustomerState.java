@@ -11,7 +11,6 @@ import com.aport.reservation.command.ViewReservationsCommandFactory;
 import com.aport.seat.command.SeatCommandFactory;
 import com.aport.user.command.LogoutCommandFactory;
 
-
 public class CustomerState extends AbstractUserState {
 
     @Override
