@@ -8,6 +8,6 @@ import com.aport.user.decorator.ValidateDecorator;
 public class SeatCommandFactory extends CommandFactory {
     @Override
     protected Command createCommand() {
-        return new ValidateDecorator(new ViewReservationsDecorator(new SeatCommand()));
+        return new ValidateDecorator(new ViewReservationsDecorator(new SelectSeatCommand()));
     }
 }
